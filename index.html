@@ -7,59 +7,82 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            background-image:
+                radial-gradient(#cbd5e1 1px, transparent 1px),
+                linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(241,245,249,0.9) 100%);
+            background-size: 22px 22px, 100% 100%;
+        }
+
+        .pattern-hero {
+            background-color: #0f172a;
+            background-image:
+                radial-gradient(rgba(255, 255, 255, 0.14) 1.25px, transparent 1.25px),
+                linear-gradient(120deg, #0f172a 0%, #1e293b 52%, #334155 100%);
+            background-size: 20px 20px, 100% 100%;
+        }
+
+        .pattern-card-grid {
+            background-image: linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
 
         .laptop-lid {
             background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
             box-shadow: 0 20px 38px -12px rgba(15, 23, 42, 0.45);
         }
 
-        /* Glossy: Bright mirror-like diagonal light reflection */
-        .finish-glossy {
-            background:
-                linear-gradient(122deg, rgba(255,255,255,0.48) 0%, rgba(255,255,255,0.14) 24%, rgba(255,255,255,0.0) 46%, rgba(255,255,255,0.26) 74%, rgba(255,255,255,0.04) 100%);
-            mix-blend-mode: screen;
+        /* Lamination Effects Over Full Laptop Lid */
+        .finish-normal {
+            background: transparent;
         }
 
-        /* Crystal: Sparkly multi-tone glitter finish */
+        /* Realistic colorless glitter/sparkle crystal effect (no color tint) */
         .finish-crystal {
-            background-color: rgba(255, 255, 255, 0.08);
             background-image:
-                radial-gradient(circle, rgba(255,255,255,0.95) 0 1.4px, transparent 1.7px),
-                radial-gradient(circle, rgba(254,240,138,0.9) 0 1.6px, transparent 2px),
-                radial-gradient(circle, rgba(244,114,182,0.75) 0 1.2px, transparent 1.6px),
-                radial-gradient(circle, rgba(125,211,252,0.85) 0 1.3px, transparent 1.8px),
-                linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.04));
-            background-size: 19px 19px, 27px 27px, 23px 23px, 31px 31px, 100% 100%;
-            background-position: 0 0, 9px 13px, 15px 4px, 5px 19px, 0 0;
+                radial-gradient(circle at 14% 22%, rgba(255, 255, 255, 0.85) 0 1px, transparent 1.7px),
+                radial-gradient(circle at 38% 15%, rgba(255, 255, 255, 0.72) 0 0.9px, transparent 1.5px),
+                radial-gradient(circle at 67% 28%, rgba(255, 255, 255, 0.88) 0 1.1px, transparent 1.8px),
+                radial-gradient(circle at 86% 19%, rgba(255, 255, 255, 0.68) 0 0.8px, transparent 1.4px),
+                radial-gradient(circle at 25% 54%, rgba(255, 255, 255, 0.8) 0 1px, transparent 1.7px),
+                radial-gradient(circle at 52% 48%, rgba(255, 255, 255, 0.9) 0 1.2px, transparent 1.9px),
+                radial-gradient(circle at 78% 61%, rgba(255, 255, 255, 0.75) 0 0.9px, transparent 1.5px),
+                radial-gradient(circle at 18% 82%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.6px),
+                radial-gradient(circle at 61% 84%, rgba(255, 255, 255, 0.86) 0 1.1px, transparent 1.8px),
+                radial-gradient(circle at 90% 79%, rgba(255, 255, 255, 0.7) 0 0.8px, transparent 1.4px);
+            background-size: 36px 36px, 44px 44px, 38px 38px, 48px 48px, 40px 40px, 34px 34px, 46px 46px, 42px 42px, 37px 37px, 50px 50px;
+            background-repeat: repeat;
+            filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.65));
         }
 
-        /* Matte: Soft smooth non-glare finish */
         .finish-matte {
-            background: rgba(15, 23, 42, 0.16);
-            backdrop-filter: saturate(0.86) contrast(0.95);
+            background: rgba(248, 250, 252, 0.14);
+            backdrop-filter: saturate(0.84) contrast(0.95) brightness(1.02);
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+<body class="text-slate-900 flex flex-col min-h-screen">
 
     <!-- Navbar -->
-    <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200">
+    <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="#top" class="flex items-center gap-1.5 text-lg md:text-2xl font-extrabold tracking-tight text-indigo-600">
-                <i class="fa-solid fa-bolt text-amber-400"></i>
-                <span>Stickify<span class="text-gray-900">Campus</span></span>
+            <a href="#top" class="flex items-center gap-1.5 text-lg md:text-2xl font-extrabold tracking-tight text-slate-900">
+                <i class="fa-solid fa-layer-group text-slate-700"></i>
+                <span>Stickify<span class="text-slate-500">Campus</span></span>
             </a>
 
             <div class="flex items-center gap-2 md:gap-5">
-                <a href="#flyer-section" class="text-xs md:text-sm font-bold text-gray-700 hover:text-indigo-600">Flyer</a>
-                <a href="#stickers-board" class="text-xs md:text-sm font-bold text-gray-700 hover:text-indigo-600">Stickers</a>
-                <a href="#order-section" class="text-xs md:text-sm font-bold text-gray-700 hover:text-indigo-600">Order</a>
+                <a href="#flyer-section" class="text-xs md:text-sm font-bold text-slate-700 hover:text-slate-950">Flyer</a>
+                <a href="#stickers-board" class="text-xs md:text-sm font-bold text-slate-700 hover:text-slate-950">Stickers</a>
+                <a href="#order-section" class="text-xs md:text-sm font-bold text-slate-700 hover:text-slate-950">Order</a>
 
-                <!-- Single Admin Upload / Edit Button -->
-                <button type="button" onclick="openUploadModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-full text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                <!-- Admin Upload / Edit Button -->
+                <button type="button" onclick="openUploadModal()" class="bg-slate-900 hover:bg-slate-800 text-white px-3.5 py-2 rounded-full text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-lock"></i>
                     <span>Upload / Edit</span>
                 </button>
             </div>
@@ -67,19 +90,19 @@
     </nav>
 
     <!-- Header -->
-    <header id="top" class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white py-9 px-4 text-center">
+    <header id="top" class="pattern-hero text-white py-9 px-4 text-center border-b border-slate-800">
         <div class="max-w-3xl mx-auto">
-            <span class="bg-white/20 text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Glossy &bull; Glitter Crystal &bull; Matte</span>
-            <h1 class="text-2xl md:text-4xl font-extrabold mt-3 mb-2">Laptop Stickers — Male & Female</h1>
-            <p class="text-xs md:text-base text-indigo-100 mb-5">View the flyer, pick stickers from the Male or Female side—or add your own picture—preview it on a laptop, choose your price & lamination, set pickup details, and submit straight to WhatsApp.</p>
+            <span class="bg-white/15 text-slate-100 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-white/15">Normal &bull; Crystal Glitter &bull; Matte</span>
+            <h1 class="text-2xl md:text-4xl font-extrabold mt-3 mb-2">Laptop Stickers — Male &amp; Female</h1>
+            <p class="text-xs md:text-base text-slate-300 mb-5">Browse the flyer, pick landscape stickers from the Male or Female side—or add your own picture—preview it across the laptop lid with lamination effects, pick your price &amp; pickup details, and send your order to WhatsApp.</p>
             <div class="flex flex-wrap justify-center gap-2.5">
-                <a href="#flyer-section" class="bg-white/15 hover:bg-white/25 text-white font-bold px-5 py-2.5 rounded-full text-xs md:text-sm border border-white/30 transition">
+                <a href="#flyer-section" class="bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-2.5 rounded-full text-xs md:text-sm border border-white/20 transition">
                     View Flyer
                 </a>
-                <a href="#stickers-board" class="bg-amber-400 hover:bg-amber-300 text-gray-900 font-bold px-5 py-2.5 rounded-full text-xs md:text-sm shadow transition">
+                <a href="#stickers-board" class="bg-white hover:bg-slate-100 text-slate-900 font-bold px-5 py-2.5 rounded-full text-xs md:text-sm shadow transition">
                     Choose Stickers
                 </a>
-                <a href="#order-section" class="bg-white/15 hover:bg-white/25 text-white font-bold px-5 py-2.5 rounded-full text-xs md:text-sm border border-white/30 transition">
+                <a href="#order-section" class="bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-2.5 rounded-full text-xs md:text-sm border border-white/20 transition">
                     Go to Checkout
                 </a>
             </div>
@@ -88,18 +111,18 @@
 
     <!-- ==================== FLYER SECTION ==================== -->
     <section id="flyer-section" class="max-w-5xl w-full mx-auto px-4 pt-8">
-        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 md:p-6">
+        <div class="bg-white pattern-card-grid rounded-2xl border border-slate-200 shadow-sm p-4 md:p-6">
             <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
                 <div>
-                    <h2 class="text-xl md:text-2xl font-extrabold text-gray-900">Sticker Flyer</h2>
-                    <p class="text-xs text-gray-500">Tap the flyer to view full size</p>
+                    <h2 class="text-xl md:text-2xl font-extrabold text-slate-900">Sticker Flyer</h2>
+                    <p class="text-xs text-slate-500">Tap the flyer to view full size</p>
                 </div>
-                <button type="button" onclick="openUploadModal()" class="text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition">
+                <button type="button" onclick="openUploadModal()" class="text-xs font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg border border-slate-200 transition">
                     <i class="fa-solid fa-image mr-1"></i> Upload / Change Flyer
                 </button>
             </div>
 
-            <div id="flyer-container" class="rounded-xl overflow-hidden border border-gray-200 bg-gray-100 flex flex-col items-center justify-center min-h-[240px] p-3">
+            <div id="flyer-container" class="rounded-xl overflow-hidden border border-slate-200 bg-slate-100/80 flex flex-col items-center justify-center min-h-[240px] p-3">
                 <!-- Flyer image rendered via JS -->
             </div>
         </div>
@@ -109,38 +132,38 @@
     <section id="stickers-board" class="max-w-6xl w-full mx-auto px-4 py-8">
         <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
             <div>
-                <h2 class="text-xl md:text-2xl font-extrabold text-gray-900">Sticker Collection</h2>
-                <p class="text-xs text-gray-500">Tap any sticker to select it and preview it on the laptop</p>
+                <h2 class="text-xl md:text-2xl font-extrabold text-slate-900">Sticker Collection</h2>
+                <p class="text-xs text-slate-500">Tap any landscape sticker to select it and preview it across the laptop</p>
             </div>
 
             <!-- View Filter (Both Sides / Male Only / Female Only) -->
-            <div class="flex gap-1.5 bg-white p-1 rounded-xl border border-gray-200">
-                <button type="button" onclick="setSideView('both')" id="view-both" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-900 text-white">Both Sides</button>
-                <button type="button" onclick="setSideView('Male')" id="view-Male" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-700 hover:bg-gray-100">Male</button>
-                <button type="button" onclick="setSideView('Female')" id="view-Female" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-700 hover:bg-gray-100">Female</button>
+            <div class="flex gap-1.5 bg-white p-1 rounded-xl border border-slate-200 shadow-2xs">
+                <button type="button" onclick="setSideView('both')" id="view-both" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white">Both Sides</button>
+                <button type="button" onclick="setSideView('Male')" id="view-Male" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-100">Male</button>
+                <button type="button" onclick="setSideView('Female')" id="view-Female" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-100">Female</button>
             </div>
         </div>
 
-        <!-- Two-Column Side-by-Side Container -->
+        <!-- Two-Column Side-by-Side Container (Preserved Layout) -->
         <div id="sides-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- MALE SIDE -->
-            <div id="side-male-box" class="bg-white rounded-2xl border-2 border-blue-100 shadow-sm p-4 md:p-5">
-                <div class="flex items-center justify-between pb-3 mb-4 border-b border-blue-100">
-                    <h3 class="text-lg font-extrabold text-blue-700 flex items-center gap-2">
-                        <i class="fa-solid fa-mars"></i> Male
+            <div id="side-male-box" class="bg-white pattern-card-grid rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-200">
+                    <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-mars text-slate-700"></i> Male
                     </h3>
-                    <span id="male-count" class="text-xs font-bold bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full">0 stickers</span>
+                    <span id="male-count" class="text-xs font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full border border-slate-200">0 stickers</span>
                 </div>
                 <div id="male-grid" class="grid grid-cols-2 gap-3.5"></div>
             </div>
 
             <!-- FEMALE SIDE -->
-            <div id="side-female-box" class="bg-white rounded-2xl border-2 border-pink-100 shadow-sm p-4 md:p-5">
-                <div class="flex items-center justify-between pb-3 mb-4 border-b border-pink-100">
-                    <h3 class="text-lg font-extrabold text-pink-600 flex items-center gap-2">
-                        <i class="fa-solid fa-venus"></i> Female
+            <div id="side-female-box" class="bg-white pattern-card-grid rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-200">
+                    <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-venus text-slate-700"></i> Female
                     </h3>
-                    <span id="female-count" class="text-xs font-bold bg-pink-50 text-pink-600 px-2.5 py-1 rounded-full">0 stickers</span>
+                    <span id="female-count" class="text-xs font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full border border-slate-200">0 stickers</span>
                 </div>
                 <div id="female-grid" class="grid grid-cols-2 gap-3.5"></div>
             </div>
@@ -149,18 +172,18 @@
 
     <!-- ==================== ORDER, FULL-LID LAPTOP PREVIEW, PRICE & PICKUP ==================== -->
     <section id="order-section" class="max-w-2xl w-full mx-auto px-4 pb-12">
-        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 md:p-7">
-            <h2 class="text-xl md:text-2xl font-extrabold text-gray-900 mb-1">Complete Your Order</h2>
-            <p class="text-xs text-gray-500 mb-5">Preview your chosen image covering the laptop lid, test Glossy / Crystal (Glitter) / Matte, choose 60, 80, or 100, and submit.</p>
+        <div class="bg-white pattern-card-grid rounded-2xl border border-slate-200 shadow-sm p-5 md:p-7">
+            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 mb-1">Complete Your Order</h2>
+            <p class="text-xs text-slate-500 mb-5">See your chosen picture covering the laptop lid with Normal, Crystal glitter, or Matte finish, choose your price, and send your order first.</p>
 
             <!-- Full-Lid Laptop Preview -->
             <div class="bg-slate-100 border border-slate-200 rounded-2xl p-4 mb-5">
                 <div class="flex items-center justify-between gap-2 mb-3">
                     <span class="text-xs font-extrabold uppercase tracking-wide text-slate-700 flex items-center gap-1.5">
-                        <i class="fa-solid fa-laptop text-indigo-600"></i> Full Laptop Preview
+                        <i class="fa-solid fa-laptop text-slate-800"></i> Full Laptop Preview
                     </span>
-                    <span id="preview-finish-badge" class="text-[11px] font-bold bg-white text-indigo-700 border border-indigo-200 px-2.5 py-0.5 rounded-full">
-                        Glossy Finish
+                    <span id="preview-finish-badge" class="text-[11px] font-bold bg-white text-slate-800 border border-slate-300 px-2.5 py-0.5 rounded-full">
+                        Normal Finish
                     </span>
                 </div>
 
@@ -171,16 +194,16 @@
                         <div id="laptop-full-lid-content" class="w-full h-full flex items-center justify-center">
                             <div class="text-center px-4">
                                 <i class="fa-solid fa-laptop text-3xl text-slate-400 mb-2"></i>
-                                <p class="text-xs text-slate-300">Tap a sticker or add your own picture to cover the laptop lid</p>
+                                <p class="text-xs text-slate-300">Tap a sticker or add your own picture to cover the whole laptop lid</p>
                             </div>
                         </div>
 
-                        <!-- Glossy / Glitter Crystal / Matte Effect Layer Over Full Lid -->
-                        <div id="laptop-finish-overlay" class="pointer-events-none absolute inset-0 z-20 finish-glossy transition-all duration-200"></div>
+                        <!-- Normal / Crystal Glitter / Matte Effect Layer Over Full Lid -->
+                        <div id="laptop-finish-overlay" class="pointer-events-none absolute inset-0 z-20 finish-normal transition-all duration-200"></div>
 
-                        <!-- Subtle Finish Label Pill -->
-                        <div id="laptop-finish-tag" class="pointer-events-none absolute bottom-2.5 right-2.5 z-30 bg-black/65 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">
-                            GLOSSY
+                        <!-- Finish Tag -->
+                        <div id="laptop-finish-tag" class="pointer-events-none absolute bottom-2.5 right-2.5 z-30 bg-slate-900/75 text-white text-[10px] font-bold px-2.5 py-1 rounded-full tracking-wide">
+                            NORMAL
                         </div>
                     </div>
                     <!-- Laptop Base Edge -->
@@ -189,29 +212,29 @@
             </div>
 
             <!-- Selected Stickers Summary -->
-            <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-3.5 mb-5">
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 mb-5">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-extrabold uppercase text-indigo-900">Selected Pictures & Stickers</span>
-                    <span id="selected-count-display" class="text-xs font-extrabold text-indigo-700">0 selected</span>
+                    <span class="text-xs font-extrabold uppercase text-slate-800">Selected Pictures &amp; Stickers</span>
+                    <span id="selected-count-display" class="text-xs font-extrabold text-slate-700">0 selected</span>
                 </div>
-                <div id="selected-items-list" class="space-y-1.5 text-xs text-gray-700">
-                    <p class="text-gray-400 italic">No stickers tapped yet. Tap stickers on the Male or Female side above, or add your own picture below.</p>
+                <div id="selected-items-list" class="space-y-1.5 text-xs text-slate-700">
+                    <p class="text-slate-400 italic">No stickers tapped yet. Tap stickers on the Male or Female side above, or add your own picture below.</p>
                 </div>
             </div>
 
             <form id="order-form" onsubmit="submitOrder(event)" class="space-y-4">
                 <!-- Customer Own Picture Option -->
-                <div class="bg-amber-50/90 border-2 border-amber-200 rounded-xl p-4 space-y-2.5">
+                <div class="bg-slate-50 border border-slate-300 rounded-xl p-4 space-y-2.5">
                     <div class="flex items-start gap-2">
-                        <i class="fa-solid fa-circle-info text-amber-600 mt-0.5 text-sm"></i>
-                        <div class="text-xs text-gray-800">
-                            <span class="font-extrabold text-gray-900">Don't see a sticker you like?</span> You can also add a picture of your choice to your order!
+                        <i class="fa-solid fa-circle-info text-slate-700 mt-0.5 text-sm"></i>
+                        <div class="text-xs text-slate-800">
+                            <span class="font-extrabold text-slate-900">Don't see a sticker you like?</span> You can also add a picture of your choice to your order!
                         </div>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2">
-                        <label for="customer-custom-photo" class="bg-white hover:bg-gray-50 text-gray-900 border border-amber-300 font-bold py-2 px-3.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-2xs transition">
-                            <i class="fa-solid fa-image text-indigo-600"></i>
+                        <label for="customer-custom-photo" class="bg-white hover:bg-slate-100 text-slate-900 border border-slate-300 font-bold py-2 px-3.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-2xs transition">
+                            <i class="fa-solid fa-image text-slate-700"></i>
                             <span>Add a Picture of Your Choice</span>
                         </label>
                         <input type="file" id="customer-custom-photo" accept="image/*" onchange="handleCustomerCustomPhoto(event)" class="sr-only">
@@ -221,31 +244,31 @@
                     </div>
 
                     <div id="customer-photo-preview-box" class="hidden flex items-center gap-3 pt-1">
-                        <img id="customer-photo-preview" src="" alt="Custom Order Picture" class="w-24 aspect-[4/3] object-cover rounded-lg border border-amber-200 bg-white">
-                        <span id="customer-photo-name" class="text-xs font-semibold text-gray-700 break-all"></span>
+                        <img id="customer-photo-preview" src="" alt="Custom Order Picture" class="w-24 aspect-[4/3] object-cover rounded-lg border border-slate-300 bg-white">
+                        <span id="customer-photo-name" class="text-xs font-semibold text-slate-700 break-all"></span>
                     </div>
                 </div>
 
                 <!-- Price Choice: 60, 80, 100 -->
                 <div>
-                    <label class="block text-xs font-bold uppercase text-gray-600 mb-1.5">Choose Price (GH₵)</label>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5">Choose Price</label>
                     <div class="grid grid-cols-3 gap-2.5">
                         <label class="cursor-pointer">
                             <input type="radio" name="order_price" value="60" checked class="peer sr-only">
-                            <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 text-center text-sm font-extrabold transition">
-                                GH₵ 60
+                            <div class="border-2 border-slate-200 bg-white peer-checked:border-slate-900 peer-checked:bg-slate-900 peer-checked:text-white rounded-xl py-2.5 text-center text-sm font-extrabold transition">
+                                60
                             </div>
                         </label>
                         <label class="cursor-pointer">
                             <input type="radio" name="order_price" value="80" class="peer sr-only">
-                            <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 text-center text-sm font-extrabold transition">
-                                GH₵ 80
+                            <div class="border-2 border-slate-200 bg-white peer-checked:border-slate-900 peer-checked:bg-slate-900 peer-checked:text-white rounded-xl py-2.5 text-center text-sm font-extrabold transition">
+                                80
                             </div>
                         </label>
                         <label class="cursor-pointer">
                             <input type="radio" name="order_price" value="100" class="peer sr-only">
-                            <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 text-center text-sm font-extrabold transition">
-                                GH₵ 100
+                            <div class="border-2 border-slate-200 bg-white peer-checked:border-slate-900 peer-checked:bg-slate-900 peer-checked:text-white rounded-xl py-2.5 text-center text-sm font-extrabold transition">
+                                100
                             </div>
                         </label>
                     </div>
@@ -253,59 +276,59 @@
 
                 <!-- Section (Male or Female only) -->
                 <div>
-                    <label class="block text-xs font-bold uppercase text-gray-600 mb-1.5">Section</label>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5">Section</label>
                     <div class="grid grid-cols-2 gap-3">
                         <label class="cursor-pointer">
                             <input type="radio" name="section" value="Male" checked class="peer sr-only">
-                            <div class="border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:bg-blue-50 rounded-xl py-2.5 text-center text-xs font-extrabold transition">
-                                <i class="fa-solid fa-mars text-blue-600 mr-1"></i> Male
+                            <div class="border-2 border-slate-200 bg-white peer-checked:border-slate-900 peer-checked:bg-slate-900 peer-checked:text-white rounded-xl py-2.5 text-center text-xs font-extrabold transition">
+                                <i class="fa-solid fa-mars mr-1"></i> Male
                             </div>
                         </label>
                         <label class="cursor-pointer">
                             <input type="radio" name="section" value="Female" class="peer sr-only">
-                            <div class="border-2 border-gray-200 peer-checked:border-pink-600 peer-checked:bg-pink-50 rounded-xl py-2.5 text-center text-xs font-extrabold transition">
-                                <i class="fa-solid fa-venus text-pink-600 mr-1"></i> Female
+                            <div class="border-2 border-slate-200 bg-white peer-checked:border-slate-900 peer-checked:bg-slate-900 peer-checked:text-white rounded-xl py-2.5 text-center text-xs font-extrabold transition">
+                                <i class="fa-solid fa-venus mr-1"></i> Female
                             </div>
                         </label>
                     </div>
                 </div>
 
-                <!-- Lamination Choice (Glossy, Crystal Glitter, Matte) -->
+                <!-- Lamination Choice (Normal, Crystal Glitter, Matte) -->
                 <div>
-                    <label class="block text-xs font-bold uppercase text-gray-600 mb-1.5">Lamination Type</label>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5">Lamination Type</label>
                     <div class="grid grid-cols-3 gap-2">
                         <label class="cursor-pointer">
-                            <input type="radio" name="lamination" value="Glossy" checked onchange="updateLaptopPreview()" class="peer sr-only">
-                            <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 px-2 text-center transition">
-                                <div class="text-xs font-extrabold">Glossy</div>
-                                <div class="text-[10px] text-gray-500">Shiny finish</div>
+                            <input type="radio" name="lamination" value="Normal" checked onchange="updateLaptopPreview()" class="peer sr-only">
+                            <div class="border-2 border-slate-200 bg-white peer-checked:border-slate-900 peer-checked:bg-slate-100 rounded-xl py-2.5 px-2 text-center transition">
+                                <div class="text-xs font-extrabold text-slate-900">Normal</div>
+                                <div class="text-[10px] text-slate-500">Clean standard finish</div>
                             </div>
                         </label>
                         <label class="cursor-pointer">
                             <input type="radio" name="lamination" value="Crystal" onchange="updateLaptopPreview()" class="peer sr-only">
-                            <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 px-2 text-center transition">
-                                <div class="text-xs font-extrabold">Crystal</div>
-                                <div class="text-[10px] text-gray-500">Glitter sparkle</div>
+                            <div class="border-2 border-slate-200 bg-white peer-checked:border-slate-900 peer-checked:bg-slate-100 rounded-xl py-2.5 px-2 text-center transition">
+                                <div class="text-xs font-extrabold text-slate-900">Crystal</div>
+                                <div class="text-[10px] text-slate-500">Clear glitter sparkle</div>
                             </div>
                         </label>
                         <label class="cursor-pointer">
                             <input type="radio" name="lamination" value="Matte" onchange="updateLaptopPreview()" class="peer sr-only">
-                            <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 px-2 text-center transition">
-                                <div class="text-xs font-extrabold">Matte</div>
-                                <div class="text-[10px] text-gray-500">Smooth & non-glare</div>
+                            <div class="border-2 border-slate-200 bg-white peer-checked:border-slate-900 peer-checked:bg-slate-100 rounded-xl py-2.5 px-2 text-center transition">
+                                <div class="text-xs font-extrabold text-slate-900">Matte</div>
+                                <div class="text-[10px] text-slate-500">Smooth &amp; non-glare</div>
                             </div>
                         </label>
                     </div>
                 </div>
 
                 <!-- Pay to This Number Box -->
-                <div class="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+                <div class="bg-slate-900 text-white rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
                     <div>
-                        <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-800">Pay to This Number</div>
-                        <div class="text-base md:text-lg font-extrabold text-gray-900 mt-0.5">+233 531780030</div>
-                        <p class="text-[11px] text-emerald-900/80">Submit your order first, copy the number, and pay the normal way.</p>
+                        <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-300">Pay to This Number</div>
+                        <div class="text-base md:text-lg font-extrabold text-white mt-0.5">+233 531780030</div>
+                        <p class="text-[11px] text-slate-300">Send your order first, copy the number, and pay the normal way.</p>
                     </div>
-                    <button type="button" onclick="copyPaymentNumber()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition shrink-0">
+                    <button type="button" onclick="copyPaymentNumber()" class="bg-white hover:bg-slate-100 text-slate-900 font-bold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 transition shrink-0">
                         <i class="fa-regular fa-copy"></i>
                         <span id="copy-pay-num-label">Copy Number</span>
                     </button>
@@ -314,42 +337,42 @@
                 <!-- Customer Name & Phone -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Your Name</label>
-                        <input type="text" id="cust-name" required placeholder="Full name" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Your Name</label>
+                        <input type="text" id="cust-name" required placeholder="Full name" class="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-slate-900">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Phone Number (WhatsApp / MoMo)</label>
-                        <input type="tel" id="cust-phone" required placeholder="e.g. 053 178 0030" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Phone Number (WhatsApp / MoMo)</label>
+                        <input type="tel" id="cust-phone" required placeholder="e.g. 053 178 0030" class="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-slate-900">
                     </div>
                 </div>
 
                 <!-- Pickup Place / Location on Campus -->
                 <div>
-                    <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Pickup Place / Location on Campus</label>
-                    <input type="text" id="cust-campus-location" required placeholder="e.g. Hall / Hostel / Lecture Theatre / Library" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Pickup Place / Location on Campus</label>
+                    <input type="text" id="cust-campus-location" required placeholder="e.g. Hall / Hostel / Lecture Theatre / Library" class="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-slate-900">
                 </div>
 
                 <!-- Pickup Day and Time -->
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Day for Pickup</label>
-                        <input type="date" id="cust-pickup-day" required class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Day for Pickup</label>
+                        <input type="date" id="cust-pickup-day" required class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-slate-900">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Time for Pickup</label>
-                        <input type="time" id="cust-pickup-time" required class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Time for Pickup</label>
+                        <input type="time" id="cust-pickup-time" required class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-slate-900">
                     </div>
                 </div>
 
-                <!-- Payment Method (Mobile Money Only) -->
-                <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-3.5 space-y-2.5">
-                    <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-mobile-screen-button text-base text-amber-500"></i>
-                        <span class="text-xs font-extrabold uppercase text-gray-700">Payment Method: Mobile Money</span>
+                <!-- Mobile Money Only -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <label class="block text-xs font-bold uppercase text-slate-700">Payment Method</label>
+                        <span class="text-[11px] font-bold bg-slate-200 text-slate-800 px-2.5 py-0.5 rounded-full">Mobile Money</span>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold uppercase text-gray-600 mb-1">MoMo Network</label>
-                        <select id="momo-network" class="w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">MoMo Network</label>
+                        <select id="momo-network" class="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-slate-900">
                             <option>MTN Mobile Money</option>
                             <option>Telecel Cash</option>
                             <option>ATMoney</option>
@@ -357,8 +380,8 @@
                     </div>
                 </div>
 
-                <button type="submit" id="pay-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-sm">
-                    <i class="fa-brands fa-whatsapp text-base"></i> <span>Submit Order to WhatsApp</span>
+                <button type="submit" id="pay-btn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-brands fa-whatsapp text-base"></i> <span>Send Order First to WhatsApp</span>
                 </button>
             </form>
         </div>
@@ -376,74 +399,74 @@
         <div class="relative bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl z-10 max-h-[92vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-extrabold flex items-center gap-2">
-                    <i class="fa-solid fa-shield-halved text-indigo-600"></i> Admin Upload & Edit
+                    <i class="fa-solid fa-shield-halved text-slate-800"></i> Admin Upload &amp; Edit
                 </h3>
-                <button type="button" onclick="closeUploadModal()" class="text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                <button type="button" onclick="closeUploadModal()" class="text-slate-400 hover:text-slate-700 text-2xl">&times;</button>
             </div>
 
             <!-- Admin Password Gate -->
             <div id="admin-login-box" class="space-y-3 py-2">
-                <p class="text-xs text-gray-600">Admin access only. Enter admin password to continue:</p>
-                <input type="password" id="admin-pass-input" placeholder="Enter admin password" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                <p class="text-xs text-slate-600">Admin access only. Enter password to open uploads and edits:</p>
+                <input type="password" id="admin-pass-input" placeholder="Enter admin password" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-slate-900">
                 <p id="admin-pass-error" class="text-xs text-red-600 hidden">Incorrect admin password. Access denied.</p>
-                <button type="button" onclick="verifyAdminLogin()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl text-sm">
-                    Verify Admin Access
+                <button type="button" onclick="verifyAdminLogin()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-sm">
+                    Unlock Admin Page
                 </button>
             </div>
 
             <!-- Admin Controls (Only Accessible After Passing 117286) -->
             <div id="admin-upload-box" class="hidden space-y-5">
-                <div class="flex items-center justify-between bg-gray-100 px-3 py-2 rounded-lg text-xs">
-                    <span class="font-bold text-gray-700"><i class="fa-solid fa-lock-open text-green-600 mr-1"></i> Admin Mode Active</span>
-                    <button type="button" onclick="lockAdminSession()" class="font-bold text-red-600 hover:underline">Lock Admin</button>
+                <div class="flex items-center justify-between bg-slate-100 px-3 py-2 rounded-lg text-xs">
+                    <span class="font-bold text-slate-800"><i class="fa-solid fa-lock-open text-emerald-600 mr-1"></i> Admin Access Verified</span>
+                    <button type="button" onclick="lockAdminSession()" class="font-bold text-red-600 hover:underline">Lock</button>
                 </div>
 
                 <!-- Flyer Upload Box -->
-                <div class="bg-purple-50/70 border border-purple-100 p-4 rounded-xl space-y-2.5">
-                    <h4 class="font-bold text-xs uppercase text-purple-900">Upload / Change Flyer Image</h4>
-                    <label for="flyer-file-input" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer shadow">
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-2.5">
+                    <h4 class="font-bold text-xs uppercase text-slate-800">Upload / Change Flyer Image</h4>
+                    <label for="flyer-file-input" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer shadow">
                         <i class="fa-solid fa-file-image"></i>
                         <span>Upload Flyer Image</span>
                     </label>
                     <input type="file" id="flyer-file-input" accept="image/*" onchange="handleFlyerFile(event)" class="sr-only">
-                    <p id="flyer-upload-status" class="text-[11px] text-gray-600">Your flyer shows in the Flyer section above.</p>
+                    <p id="flyer-upload-status" class="text-[11px] text-slate-600">Your flyer shows in the Flyer section above.</p>
                 </div>
 
                 <!-- Stickers Upload Box -->
-                <div class="bg-indigo-50/70 border border-indigo-100 p-4 rounded-xl space-y-3">
-                    <h4 class="font-bold text-xs uppercase text-indigo-900">Upload Pictures (Male or Female)</h4>
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3">
+                    <h4 class="font-bold text-xs uppercase text-slate-800">Upload Pictures (Male or Female)</h4>
                     <div>
-                        <label class="block text-[11px] font-bold uppercase text-gray-600 mb-1">Put On Side</label>
-                        <select id="upload-gender" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold">
+                        <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Put On Side</label>
+                        <select id="upload-gender" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm font-bold">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
                     </div>
 
                     <div>
-                        <label for="sticker-file-input" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 cursor-pointer shadow">
+                        <label for="sticker-file-input" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 cursor-pointer shadow">
                             <i class="fa-solid fa-upload"></i>
                             <span>Upload Sticker Pictures</span>
                         </label>
                         <input type="file" id="sticker-file-input" accept="image/*" multiple onchange="handleStickerFiles(event)" class="sr-only">
-                        <p id="upload-status" class="text-[11px] text-gray-500 mt-1.5">Select as many pictures as you want on either side.</p>
+                        <p id="upload-status" class="text-[11px] text-slate-500 mt-1.5">Select as many pictures as you want for Male or Female.</p>
                     </div>
                 </div>
 
                 <!-- Uploaded Stickers List -->
                 <div>
                     <div class="flex items-center justify-between mb-2">
-                        <h4 class="font-bold text-xs uppercase text-gray-500">All Stickers (<span id="uploaded-count">0</span>)</h4>
-                        <button type="button" onclick="resetDefaultStickers()" class="text-[11px] font-bold text-indigo-600 hover:underline">Reset Default Stickers</button>
+                        <h4 class="font-bold text-xs uppercase text-slate-500">All Stickers (<span id="uploaded-count">0</span>)</h4>
+                        <button type="button" onclick="resetDefaultStickers()" class="text-[11px] font-bold text-slate-800 hover:underline">Reset Default Stickers</button>
                     </div>
                     <div id="admin-sticker-list" class="space-y-2 max-h-52 overflow-y-auto pr-1"></div>
                 </div>
 
                 <!-- Download Updated HTML -->
-                <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-xs space-y-2">
-                    <div class="font-bold text-amber-900">Save File for GitHub / Hosting</div>
-                    <p class="text-amber-800">Download the updated file with your flyer and stickers saved inside:</p>
-                    <button type="button" onclick="downloadUpdatedHTML()" class="w-full bg-gray-900 text-white font-bold py-2 rounded-lg text-xs">
+                <div class="bg-slate-100 border border-slate-200 p-3 rounded-xl text-xs space-y-2">
+                    <div class="font-bold text-slate-900">Save File for GitHub / Hosting</div>
+                    <p class="text-slate-600">Download the updated file with your flyer and stickers saved inside:</p>
+                    <button type="button" onclick="downloadUpdatedHTML()" class="w-full bg-slate-900 text-white font-bold py-2 rounded-lg text-xs">
                         <i class="fa-solid fa-download mr-1"></i> Download Updated index.html
                     </button>
                 </div>
@@ -455,36 +478,37 @@
     <div id="success-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         <div class="relative bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl z-10 max-h-[92vh] overflow-y-auto">
-            <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-3">
+            <div class="w-14 h-14 bg-slate-100 text-slate-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 border border-slate-200">
                 <i class="fa-brands fa-whatsapp"></i>
             </div>
-            <h3 class="text-xl font-extrabold mb-1">Order Sent to WhatsApp</h3>
-            <p class="text-xs text-gray-600 mb-4">Order for <span id="res-name" class="font-bold text-gray-900"></span> • Pay to <strong>+233 531780030</strong>:</p>
-            <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-xl text-left text-xs space-y-2 mb-4">
-                <div><span class="font-bold text-gray-700">Price:</span> <span id="res-price" class="font-extrabold text-indigo-700"></span></div>
-                <div><span class="font-bold text-gray-700">Section & Lamination:</span> <span id="res-spec"></span></div>
+            <h3 class="text-xl font-extrabold mb-1">Order Prepared for WhatsApp</h3>
+            <p class="text-xs text-slate-600 mb-4">Order for <span id="res-name" class="font-bold text-slate-900"></span> • Pay to <strong>+233 531780030</strong>:</p>
+            <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl text-left text-xs space-y-2 mb-4">
+                <div><span class="font-bold text-slate-700">Price:</span> <span id="res-price" class="font-extrabold text-slate-900"></span></div>
+                <div><span class="font-bold text-slate-700">Section &amp; Lamination:</span> <span id="res-spec"></span></div>
                 <div>
-                    <div class="font-bold text-gray-700 mb-1">Selected Pictures in Order:</div>
+                    <div class="font-bold text-slate-700 mb-1">Selected Pictures in Order:</div>
                     <div id="res-pictures-list" class="space-y-1.5"></div>
                 </div>
-                <div><span class="font-bold text-gray-700">Pickup Place:</span> <span id="res-loc"></span></div>
-                <div><span class="font-bold text-gray-700">Pickup Day & Time:</span> <span id="res-datetime"></span></div>
-                <div><span class="font-bold text-gray-700">Payment:</span> <span id="res-payment"></span></div>
-                <div><span class="font-bold text-gray-700">Order Ref:</span> <span id="res-ref" class="font-mono font-bold"></span></div>
+                <div><span class="font-bold text-slate-700">Pickup Place:</span> <span id="res-loc"></span></div>
+                <div><span class="font-bold text-slate-700">Pickup Day &amp; Time:</span> <span id="res-datetime"></span></div>
+                <div><span class="font-bold text-slate-700">Payment:</span> <span id="res-payment"></span></div>
+                <div><span class="font-bold text-slate-700">Pay to This Number:</span> <span class="font-bold text-slate-900">+233 531780030</span></div>
+                <div><span class="font-bold text-slate-700">Order Ref:</span> <span id="res-ref" class="font-mono font-bold"></span></div>
             </div>
 
             <div class="space-y-2">
-                <button type="button" onclick="copyPaymentNumber()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs">
+                <button type="button" onclick="copyPaymentNumber()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-xs">
                     <i class="fa-regular fa-copy mr-1"></i> Copy Payment Number (+233 531780030)
                 </button>
-                <a id="whatsapp-order-link" href="#" target="_blank" rel="noopener noreferrer" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow">
+                <a id="whatsapp-order-link" href="#" target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow">
                     <i class="fa-brands fa-whatsapp text-sm"></i>
                     <span>Open WhatsApp (+233 531780030)</span>
                 </a>
-                <button type="button" onclick="copyOrderSummary()" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2.5 rounded-xl text-xs">
+                <button type="button" onclick="copyOrderSummary()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold py-2.5 rounded-xl text-xs">
                     <i class="fa-regular fa-copy mr-1"></i> <span id="copy-btn-label">Copy Order Details</span>
                 </button>
-                <button type="button" onclick="closeSuccessModal()" class="w-full bg-gray-900 text-white font-bold py-2.5 rounded-xl text-xs">
+                <button type="button" onclick="closeSuccessModal()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold py-2.5 rounded-xl text-xs">
                     Done
                 </button>
             </div>
@@ -492,8 +516,8 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-6 text-center text-xs mt-auto">
-        <p>&copy; 2026 Stickify Campus. Pay &amp; Order WhatsApp: +233 531780030</p>
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs mt-auto border-t border-slate-800">
+        <p>&copy; 2026 Stickify Campus. Mobile Money &amp; WhatsApp: +233 531780030</p>
     </footer>
 
     <script>
@@ -503,13 +527,13 @@
         const defaultFlyerData = "";
         const defaultStickers = [
             { id: 1, gender: "Male", label: "Male Sticker 1", image: "💀⚡", bg: "bg-slate-100" },
-            { id: 2, gender: "Male", label: "Male Sticker 2", image: "💻🔥", bg: "bg-blue-100" },
-            { id: 3, gender: "Male", label: "Male Sticker 3", image: "🏎️💨", bg: "bg-red-100" },
-            { id: 4, gender: "Male", label: "Male Sticker 4", image: "⚽👑", bg: "bg-emerald-100" },
-            { id: 5, gender: "Female", label: "Female Sticker 1", image: "🌸✨", bg: "bg-pink-100" },
-            { id: 6, gender: "Female", label: "Female Sticker 2", image: "🦋💜", bg: "bg-purple-100" },
-            { id: 7, gender: "Female", label: "Female Sticker 3", image: "💖🌷", bg: "bg-rose-100" },
-            { id: 8, gender: "Female", label: "Female Sticker 4", image: "🧋👑", bg: "bg-amber-100" }
+            { id: 2, gender: "Male", label: "Male Sticker 2", image: "💻🔥", bg: "bg-slate-100" },
+            { id: 3, gender: "Male", label: "Male Sticker 3", image: "🏎️💨", bg: "bg-slate-100" },
+            { id: 4, gender: "Male", label: "Male Sticker 4", image: "⚽👑", bg: "bg-slate-100" },
+            { id: 5, gender: "Female", label: "Female Sticker 1", image: "🌸✨", bg: "bg-slate-100" },
+            { id: 6, gender: "Female", label: "Female Sticker 2", image: "🦋💜", bg: "bg-slate-100" },
+            { id: 7, gender: "Female", label: "Female Sticker 3", image: "💖🌷", bg: "bg-slate-100" },
+            { id: 8, gender: "Female", label: "Female Sticker 4", image: "🧋👑", bg: "bg-slate-100" }
         ];
 
         function loadSavedFlyer() {
@@ -564,10 +588,10 @@
             } else {
                 container.innerHTML = `
                     <div class="text-center py-10 px-4">
-                        <i class="fa-solid fa-file-image text-4xl text-gray-400 mb-3"></i>
-                        <p class="font-bold text-sm text-gray-700">No Flyer Uploaded Yet</p>
-                        <p class="text-xs text-gray-500 mt-1 mb-4">Admin can tap "Upload / Edit" at the top to add the sticker flyer.</p>
-                        <button type="button" onclick="openUploadModal()" class="bg-indigo-600 text-white font-bold px-4 py-2 rounded-xl text-xs">
+                        <i class="fa-solid fa-file-image text-4xl text-slate-400 mb-3"></i>
+                        <p class="font-bold text-sm text-slate-700">No Flyer Uploaded Yet</p>
+                        <p class="text-xs text-slate-500 mt-1 mb-4">Admin can tap "Upload / Edit" at the top to add the sticker flyer.</p>
+                        <button type="button" onclick="openUploadModal()" class="bg-slate-900 text-white font-bold px-4 py-2 rounded-xl text-xs">
                             Upload Flyer
                         </button>
                     </div>
@@ -593,17 +617,17 @@
                 : `<div class="text-3xl select-none">${sticker.image}</div>`;
 
             const borderClass = isPicked
-                ? 'border-2 border-indigo-600 ring-2 ring-indigo-200 bg-indigo-50/30'
-                : 'border border-gray-200 bg-white hover:border-gray-300';
+                ? 'border-2 border-slate-900 ring-2 ring-slate-300 bg-slate-50'
+                : 'border border-slate-200 bg-white hover:border-slate-300';
 
             return `
                 <div onclick="toggleStickerSelection(${sticker.id})" class="rounded-xl ${borderClass} p-2.5 flex flex-col items-center justify-between cursor-pointer transition select-none">
-                    <div class="w-full aspect-[4/3] rounded-lg ${sticker.bg || 'bg-gray-100'} flex items-center justify-center overflow-hidden mb-2">
+                    <div class="w-full aspect-[4/3] rounded-lg ${sticker.bg || 'bg-slate-100'} flex items-center justify-center overflow-hidden mb-2">
                         ${visual}
                     </div>
                     <div class="w-full flex items-center justify-between gap-1">
-                        <span class="text-[11px] font-semibold text-gray-600 truncate">${title}</span>
-                        <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full shrink-0 ${isPicked ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700'}">
+                        <span class="text-[11px] font-semibold text-slate-600 truncate">${title}</span>
+                        <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full shrink-0 ${isPicked ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}">
                             ${isPicked ? 'Selected' : 'Pick'}
                         </span>
                     </div>
@@ -620,11 +644,11 @@
 
             document.getElementById('male-grid').innerHTML = maleList.length
                 ? maleList.map((s, i) => renderStickerCard(s, i)).join('')
-                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Male stickers yet.</p>`;
+                : `<p class="col-span-full text-center text-xs text-slate-400 py-8">No Male stickers yet.</p>`;
 
             document.getElementById('female-grid').innerHTML = femaleList.length
                 ? femaleList.map((s, i) => renderStickerCard(s, i)).join('')
-                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Female stickers yet.</p>`;
+                : `<p class="col-span-full text-center text-xs text-slate-400 py-8">No Female stickers yet.</p>`;
         }
 
         function setSideView(mode) {
@@ -635,8 +659,8 @@
             ['both', 'Male', 'Female'].forEach(m => {
                 const btn = document.getElementById(`view-${m}`);
                 btn.className = m === mode
-                    ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-900 text-white'
-                    : 'px-3 py-1.5 rounded-lg text-xs font-bold text-gray-700 hover:bg-gray-100';
+                    ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white'
+                    : 'px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-100';
             });
 
             if (mode === 'both') {
@@ -676,12 +700,12 @@
             const finishTag = document.getElementById('laptop-finish-tag');
             const lamination = document.querySelector('input[name="lamination"]:checked').value;
 
-            badge.innerText = lamination === 'Crystal' ? 'Crystal Glitter Finish' : `${lamination} Finish`;
-            finishTag.innerText = lamination === 'Crystal' ? 'CRYSTAL GLITTER' : lamination.toUpperCase();
+            badge.innerText = `${lamination} Finish`;
+            finishTag.innerText = lamination.toUpperCase();
             overlay.className = 'pointer-events-none absolute inset-0 z-20 transition-all duration-200 ' + (
-                lamination === 'Glossy' ? 'finish-glossy' :
                 lamination === 'Crystal' ? 'finish-crystal' :
-                'finish-matte'
+                lamination === 'Matte' ? 'finish-matte' :
+                'finish-normal'
             );
 
             let activeVisual = null;
@@ -691,14 +715,14 @@
                 const latest = selectedStickers[selectedStickers.length - 1];
                 activeVisual = isImageSrc(latest.image)
                     ? { type: 'image', src: latest.image, alt: latest.label || 'Sticker' }
-                    : { type: 'emoji', src: latest.image, bg: latest.bg || 'bg-indigo-900' };
+                    : { type: 'emoji', src: latest.image, bg: latest.bg || 'bg-slate-800' };
             }
 
             if (!activeVisual) {
                 lidContent.innerHTML = `
                     <div class="text-center px-4">
                         <i class="fa-solid fa-laptop text-3xl text-slate-400 mb-2"></i>
-                        <p class="text-xs text-slate-300">Tap a sticker or add your own picture to cover the laptop lid</p>
+                        <p class="text-xs text-slate-300">Tap a sticker or add your own picture to cover the whole laptop lid</p>
                     </div>
                 `;
             } else if (activeVisual.type === 'image') {
@@ -716,34 +740,34 @@
             countEl.innerText = `${totalItems} selected`;
 
             if (selectedStickers.length === 0 && !customerCustomPhoto) {
-                listEl.innerHTML = `<p class="text-gray-400 italic">No stickers tapped yet. Tap stickers on the Male or Female side above, or add your own picture below.</p>`;
+                listEl.innerHTML = `<p class="text-slate-400 italic">No stickers tapped yet. Tap stickers on the Male or Female side above, or add your own picture below.</p>`;
                 return;
             }
 
             let html = selectedStickers.map((s) => {
                 const title = s.label || `${s.gender} Sticker`;
                 const thumb = isImageSrc(s.image)
-                    ? `<img src="${s.image}" class="w-10 aspect-[4/3] object-cover rounded bg-white border">`
+                    ? `<img src="${s.image}" class="w-10 aspect-[4/3] object-cover rounded bg-white border border-slate-200">`
                     : `<span class="text-base">${s.image}</span>`;
                 return `
-                    <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-indigo-100">
+                    <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-slate-200">
                         <div class="flex items-center gap-2 min-w-0">
                             ${thumb}
                             <span class="font-bold truncate">${title}</span>
                         </div>
-                        <button type="button" onclick="toggleStickerSelection(${s.id})" class="text-red-500 font-bold text-xs shrink-0 ml-2">Remove</button>
+                        <button type="button" onclick="toggleStickerSelection(${s.id})" class="text-red-600 font-bold text-xs shrink-0 ml-2">Remove</button>
                     </div>
                 `;
             }).join('');
 
             if (customerCustomPhoto) {
                 html += `
-                    <div class="flex items-center justify-between bg-amber-50 px-2.5 py-1.5 rounded-lg border border-amber-200">
+                    <div class="flex items-center justify-between bg-slate-100 px-2.5 py-1.5 rounded-lg border border-slate-300">
                         <div class="flex items-center gap-2 min-w-0">
-                            <img src="${customerCustomPhoto.dataUrl}" class="w-10 aspect-[4/3] object-cover rounded bg-white border">
+                            <img src="${customerCustomPhoto.dataUrl}" class="w-10 aspect-[4/3] object-cover rounded bg-white border border-slate-200">
                             <span class="font-bold truncate">Custom Picture: ${customerCustomPhoto.name}</span>
                         </div>
-                        <button type="button" onclick="clearCustomerCustomPhoto()" class="text-red-500 font-bold text-xs shrink-0 ml-2">Remove</button>
+                        <button type="button" onclick="clearCustomerCustomPhoto()" class="text-red-600 font-bold text-xs shrink-0 ml-2">Remove</button>
                     </div>
                 `;
             }
@@ -751,6 +775,7 @@
             listEl.innerHTML = html;
         }
 
+        // Fast image resizing so unlimited batches stay fast and lightweight
         function resizeFileToDataUrl(file, maxWidth, quality, callback) {
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -777,11 +802,12 @@
             reader.readAsDataURL(file);
         }
 
+        // Customer Custom Photo
         function handleCustomerCustomPhoto(event) {
             const file = event.target.files && event.target.files[0];
             if (!file) return;
 
-            resizeFileToDataUrl(file, 900, 0.84, function(dataUrl) {
+            resizeFileToDataUrl(file, 960, 0.84, function(dataUrl) {
                 customerCustomPhoto = {
                     name: file.name,
                     dataUrl
@@ -805,7 +831,7 @@
             updateLaptopPreview();
         }
 
-        // Admin Modal (Password Strictly 117286)
+        // Admin Modal (Strict Password: 117286)
         function syncAdminModalUI() {
             const loginBox = document.getElementById('admin-login-box');
             const uploadBox = document.getElementById('admin-upload-box');
@@ -883,7 +909,7 @@
                         gender,
                         label: `${gender}: ${cleanName}`,
                         image: dataUrl,
-                        bg: gender === 'Male' ? 'bg-blue-50' : 'bg-pink-50'
+                        bg: 'bg-slate-100'
                     };
                     doneCount++;
                     if (doneCount === files.length) {
@@ -936,10 +962,10 @@
             document.getElementById('admin-sticker-list').innerHTML = stickers.map((s, i) => {
                 const title = s.label || `${s.gender} #${i + 1}`;
                 const thumb = isImageSrc(s.image)
-                    ? `<img src="${s.image}" class="w-12 aspect-[4/3] object-cover rounded border bg-white">`
+                    ? `<img src="${s.image}" class="w-12 aspect-[4/3] object-cover rounded border border-slate-200 bg-white">`
                     : `<span class="text-xl">${s.image}</span>`;
                 return `
-                    <div class="flex items-center justify-between bg-gray-50 p-2 rounded-lg border border-gray-200 text-xs">
+                    <div class="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200 text-xs">
                         <div class="flex items-center gap-2.5 min-w-0">
                             ${thumb}
                             <div class="font-bold truncate">${title}</div>
@@ -1016,12 +1042,12 @@
                 const label = s.label || `${s.gender} Sticker ${idx + 1}`;
                 waPictureLines.push(`- ${label}`);
                 const thumbHtml = isImageSrc(s.image)
-                    ? `<img src="${s.image}" alt="${label}" class="w-11 aspect-[4/3] object-cover rounded border bg-white">`
-                    : `<span class="w-11 aspect-[4/3] flex items-center justify-center rounded border bg-white text-lg">${s.image}</span>`;
+                    ? `<img src="${s.image}" alt="${label}" class="w-11 aspect-[4/3] object-cover rounded border border-slate-200 bg-white">`
+                    : `<span class="w-11 aspect-[4/3] flex items-center justify-center rounded border border-slate-200 bg-white text-lg">${s.image}</span>`;
                 picCards.push(`
-                    <div class="flex items-center gap-2 bg-white p-1.5 rounded-lg border border-indigo-100">
+                    <div class="flex items-center gap-2 bg-white p-1.5 rounded-lg border border-slate-200">
                         ${thumbHtml}
-                        <span class="font-bold text-gray-800">${label}</span>
+                        <span class="font-bold text-slate-800">${label}</span>
                     </div>
                 `);
             });
@@ -1029,9 +1055,9 @@
             if (customerCustomPhoto) {
                 waPictureLines.push(`- Custom Picture: ${customerCustomPhoto.name} (attached in chat)`);
                 picCards.push(`
-                    <div class="flex items-center gap-2 bg-amber-50 p-1.5 rounded-lg border border-amber-200">
-                        <img src="${customerCustomPhoto.dataUrl}" alt="${customerCustomPhoto.name}" class="w-11 aspect-[4/3] object-cover rounded border bg-white">
-                        <span class="font-bold text-gray-900">Custom: ${customerCustomPhoto.name}</span>
+                    <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-lg border border-slate-300">
+                        <img src="${customerCustomPhoto.dataUrl}" alt="${customerCustomPhoto.name}" class="w-11 aspect-[4/3] object-cover rounded border border-slate-200 bg-white">
+                        <span class="font-bold text-slate-900">Custom: ${customerCustomPhoto.name}</span>
                     </div>
                 `);
             }
@@ -1040,7 +1066,7 @@
 
             latestOrderMessage = [
                 `*New Sticker Order (${ref})*`,
-                `Price: GH₵ ${chosenPrice}`,
+                `Price: ${chosenPrice}`,
                 `Pay To Number: ${PAY_DISPLAY_NUMBER}`,
                 `Name: ${name}`,
                 `Phone: ${phone}`,
@@ -1057,7 +1083,7 @@
             const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(latestOrderMessage)}`;
 
             document.getElementById('res-name').innerText = name;
-            document.getElementById('res-price').innerText = `GH₵ ${chosenPrice}`;
+            document.getElementById('res-price').innerText = chosenPrice;
             document.getElementById('res-spec').innerText = `${section} • ${lamination}`;
             document.getElementById('res-loc').innerText = loc;
             document.getElementById('res-datetime').innerText = `${day} at ${time}`;
