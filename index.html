@@ -9,6 +9,21 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .laptop-lid {
+            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+            box-shadow: 0 18px 35px -12px rgba(15, 23, 42, 0.45);
+        }
+        .sheen-glossy {
+            background: linear-gradient(125deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.04) 45%, rgba(255,255,255,0.18) 100%);
+        }
+        .sheen-crystal {
+            background-image: radial-gradient(rgba(255,255,255,0.18) 1px, transparent 0);
+            background-size: 8px 8px;
+        }
+        .sheen-matte {
+            background: rgba(255, 255, 255, 0.03);
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
@@ -40,7 +55,7 @@
         <div class="max-w-3xl mx-auto">
             <span class="bg-white/20 text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Glossy &bull; Crystal &bull; Matte</span>
             <h1 class="text-2xl md:text-4xl font-extrabold mt-3 mb-2">Laptop Stickers — Male & Female</h1>
-            <p class="text-xs md:text-base text-indigo-100 mb-5">View the flyer, pick stickers from the Male or Female side, select lamination, choose your pickup place, day & time, and pay.</p>
+            <p class="text-xs md:text-base text-indigo-100 mb-5">View the flyer, pick stickers from the Male or Female side—or add your own picture—preview it on a laptop, set your pickup place, day & time, and submit straight to WhatsApp.</p>
             <div class="flex flex-wrap justify-center gap-2.5">
                 <a href="#flyer-section" class="bg-white/15 hover:bg-white/25 text-white font-bold px-5 py-2.5 rounded-full text-xs md:text-sm border border-white/30 transition">
                     View Flyer
@@ -68,7 +83,7 @@
                 </button>
             </div>
 
-            <div id="flyer-container" class="rounded-xl overflow-hidden border border-gray-200 bg-gray-100 flex flex-col items-center justify-center min-h-[260px] p-3">
+            <div id="flyer-container" class="rounded-xl overflow-hidden border border-gray-200 bg-gray-100 flex flex-col items-center justify-center min-h-[240px] p-3">
                 <!-- Flyer image rendered via JS -->
             </div>
         </div>
@@ -79,7 +94,7 @@
         <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
             <div>
                 <h2 class="text-xl md:text-2xl font-extrabold text-gray-900">Sticker Collection</h2>
-                <p class="text-xs text-gray-500">Tap any sticker to select it for your order</p>
+                <p class="text-xs text-gray-500">Tap any sticker to select it and preview it on a laptop</p>
             </div>
 
             <!-- View Filter (Both Sides / Male Only / Female Only) -->
@@ -100,7 +115,7 @@
                     </h3>
                     <span id="male-count" class="text-xs font-bold bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full">0 stickers</span>
                 </div>
-                <div id="male-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3.5"></div>
+                <div id="male-grid" class="grid grid-cols-2 gap-3.5"></div>
             </div>
 
             <!-- FEMALE SIDE -->
@@ -111,29 +126,86 @@
                     </h3>
                     <span id="female-count" class="text-xs font-bold bg-pink-50 text-pink-600 px-2.5 py-1 rounded-full">0 stickers</span>
                 </div>
-                <div id="female-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3.5"></div>
+                <div id="female-grid" class="grid grid-cols-2 gap-3.5"></div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== ORDER, LAMINATION & CAMPUS PICKUP ==================== -->
+    <!-- ==================== ORDER, LAPTOP PREVIEW, CUSTOM PICTURE & PICKUP ==================== -->
     <section id="order-section" class="max-w-2xl w-full mx-auto px-4 pb-12">
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 md:p-7">
             <h2 class="text-xl md:text-2xl font-extrabold text-gray-900 mb-1">Complete Your Order</h2>
-            <p class="text-xs text-gray-500 mb-5">Selected stickers, lamination finish, pickup place, day & time, and payment.</p>
+            <p class="text-xs text-gray-500 mb-5">See how your chosen sticker(s) look on a laptop, pick your lamination, set pickup place, day & time, and submit.</p>
+
+            <!-- Live Laptop Preview -->
+            <div class="bg-slate-100 border border-slate-200 rounded-2xl p-4 mb-5">
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <span class="text-xs font-extrabold uppercase tracking-wide text-slate-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-laptop text-indigo-600"></i> Laptop Preview
+                    </span>
+                    <span id="preview-lamination-badge" class="text-[11px] font-bold bg-white text-indigo-700 border border-indigo-200 px-2.5 py-0.5 rounded-full">
+                        Glossy Finish
+                    </span>
+                </div>
+
+                <!-- Laptop Lid Frame (Landscape) -->
+                <div class="mx-auto max-w-lg">
+                    <div class="laptop-lid relative rounded-2xl border-4 border-slate-700 aspect-[16/10] w-full overflow-hidden flex items-center justify-center p-4">
+                        <div class="absolute top-2.5 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white/40">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+
+                        <!-- Landscape Stickers / Custom Picture Placed on Lid -->
+                        <div id="laptop-stickers-stage" class="relative z-10 grid grid-cols-2 sm:grid-cols-3 gap-2.5 w-full max-h-full overflow-y-auto px-2 py-5">
+                            <p class="col-span-full text-xs text-slate-300/80 text-center">Tap a sticker or add your own picture to preview it on the laptop</p>
+                        </div>
+
+                        <!-- Lamination Overlay Effect -->
+                        <div id="laptop-lamination-overlay" class="pointer-events-none absolute inset-0 z-20 sheen-glossy transition-all"></div>
+                    </div>
+                    <!-- Laptop Base Edge -->
+                    <div class="mx-auto h-2.5 w-[104%] -ml-[2%] bg-gradient-to-b from-slate-300 to-slate-400 rounded-b-xl shadow-md"></div>
+                </div>
+            </div>
 
             <!-- Selected Stickers Summary -->
             <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-3.5 mb-5">
                 <div class="flex justify-between items-center mb-2">
                     <span class="text-xs font-extrabold uppercase text-indigo-900">Selected Stickers</span>
-                    <span id="selected-total-display" class="text-sm font-extrabold text-indigo-700">GH₵ 0.00</span>
+                    <span id="selected-count-display" class="text-xs font-extrabold text-indigo-700">0 selected</span>
                 </div>
                 <div id="selected-items-list" class="space-y-1.5 text-xs text-gray-700">
-                    <p class="text-gray-400 italic">No stickers tapped yet. Tap stickers on the Male or Female side above.</p>
+                    <p class="text-gray-400 italic">No stickers tapped yet. Tap stickers on the Male or Female side above, or add your own picture below.</p>
                 </div>
             </div>
 
             <form id="order-form" onsubmit="submitOrder(event)" class="space-y-4">
+                <!-- Customer Own Picture Option -->
+                <div class="bg-amber-50/90 border-2 border-amber-200 rounded-xl p-4 space-y-2.5">
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-info text-amber-600 mt-0.5 text-sm"></i>
+                        <div class="text-xs text-gray-800">
+                            <span class="font-extrabold text-gray-900">Don't see a sticker you like?</span> You can also add a picture of your choice to your order!
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <label for="customer-custom-photo" class="bg-white hover:bg-gray-50 text-gray-900 border border-amber-300 font-bold py-2 px-3.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-2xs transition">
+                            <i class="fa-solid fa-image text-indigo-600"></i>
+                            <span>Add a Picture of Your Choice</span>
+                        </label>
+                        <input type="file" id="customer-custom-photo" accept="image/*" onchange="handleCustomerCustomPhoto(event)" class="sr-only">
+                        <button type="button" id="clear-custom-photo-btn" onclick="clearCustomerCustomPhoto()" class="hidden text-xs font-bold text-red-600 px-2 py-1">
+                            Remove Picture
+                        </button>
+                    </div>
+
+                    <div id="customer-photo-preview-box" class="hidden flex items-center gap-3 pt-1">
+                        <img id="customer-photo-preview" src="" alt="Custom Order Picture" class="w-24 aspect-[4/3] object-cover rounded-lg border border-amber-200 bg-white">
+                        <span id="customer-photo-name" class="text-xs font-semibold text-gray-700 break-all"></span>
+                    </div>
+                </div>
+
                 <!-- Section (Male or Female only) -->
                 <div>
                     <label class="block text-xs font-bold uppercase text-gray-600 mb-1.5">Section</label>
@@ -158,21 +230,21 @@
                     <label class="block text-xs font-bold uppercase text-gray-600 mb-1.5">Lamination Type</label>
                     <div class="grid grid-cols-3 gap-2">
                         <label class="cursor-pointer">
-                            <input type="radio" name="lamination" value="Glossy" checked class="peer sr-only">
+                            <input type="radio" name="lamination" value="Glossy" checked onchange="updateLaptopPreview()" class="peer sr-only">
                             <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 px-2 text-center transition">
                                 <div class="text-xs font-extrabold">Glossy</div>
                                 <div class="text-[10px] text-gray-500">Shiny finish</div>
                             </div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="lamination" value="Crystal" class="peer sr-only">
+                            <input type="radio" name="lamination" value="Crystal" onchange="updateLaptopPreview()" class="peer sr-only">
                             <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 px-2 text-center transition">
                                 <div class="text-xs font-extrabold">Crystal</div>
                                 <div class="text-[10px] text-gray-500">Textured & strong</div>
                             </div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="lamination" value="Matte" class="peer sr-only">
+                            <input type="radio" name="lamination" value="Matte" onchange="updateLaptopPreview()" class="peer sr-only">
                             <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 px-2 text-center transition">
                                 <div class="text-xs font-extrabold">Matte</div>
                                 <div class="text-[10px] text-gray-500">Smooth & non-glare</div>
@@ -189,7 +261,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Phone Number (WhatsApp / MoMo)</label>
-                        <input type="tel" id="cust-phone" required placeholder="e.g. 024 123 4567" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                        <input type="tel" id="cust-phone" required placeholder="e.g. 053 178 0030" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
                     </div>
                 </div>
 
@@ -242,7 +314,7 @@
                 </div>
 
                 <button type="submit" id="pay-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-sm">
-                    <i class="fa-solid fa-lock"></i> <span>Pay & Confirm Campus Pickup</span>
+                    <i class="fa-brands fa-whatsapp text-base"></i> <span>Submit Order to WhatsApp</span>
                 </button>
             </form>
         </div>
@@ -291,18 +363,12 @@
                 <!-- Stickers Upload Box -->
                 <div class="bg-indigo-50/70 border border-indigo-100 p-4 rounded-xl space-y-3">
                     <h4 class="font-bold text-xs uppercase text-indigo-900">Upload Stickers (Male or Female)</h4>
-                    <div class="grid grid-cols-2 gap-2.5">
-                        <div>
-                            <label class="block text-[11px] font-bold uppercase text-gray-600 mb-1">Put On Side</label>
-                            <select id="upload-gender" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-bold uppercase text-gray-600 mb-1">Price (GH₵)</label>
-                            <input type="number" id="upload-price" value="15" min="1" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold">
-                        </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-gray-600 mb-1">Put On Side</label>
+                        <select id="upload-gender" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
                     </div>
 
                     <div>
@@ -333,49 +399,64 @@
         </div>
     </div>
 
-    <!-- ==================== ORDER SUCCESS MODAL ==================== -->
+    <!-- ==================== ORDER BACKUP / CONFIRMATION MODAL ==================== -->
     <div id="success-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         <div class="relative bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl z-10">
             <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-3">
-                <i class="fa-solid fa-check"></i>
+                <i class="fa-brands fa-whatsapp"></i>
             </div>
-            <h3 class="text-xl font-extrabold mb-1">Order Confirmed!</h3>
-            <p class="text-xs text-gray-600 mb-4">Thank you, <span id="res-name" class="font-bold text-gray-900"></span>! Your pickup details:</p>
+            <h3 class="text-xl font-extrabold mb-1">Opening WhatsApp...</h3>
+            <p class="text-xs text-gray-600 mb-4">Your order for <span id="res-name" class="font-bold text-gray-900"></span> is prepared for <strong>+233 531780030</strong>:</p>
             <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-xl text-left text-xs space-y-1.5 mb-4">
                 <div><span class="font-bold text-gray-700">Section & Lamination:</span> <span id="res-spec"></span></div>
-                <div><span class="font-bold text-gray-700">Stickers & Total:</span> <span id="res-total" class="font-bold text-indigo-700"></span></div>
+                <div><span class="font-bold text-gray-700">Stickers Chosen:</span> <span id="res-stickers" class="font-bold text-indigo-700"></span></div>
+                <div><span class="font-bold text-gray-700">Custom Picture:</span> <span id="res-custom-pic"></span></div>
                 <div><span class="font-bold text-gray-700">Pickup Place:</span> <span id="res-loc"></span></div>
                 <div><span class="font-bold text-gray-700">Pickup Day & Time:</span> <span id="res-datetime"></span></div>
+                <div><span class="font-bold text-gray-700">Payment:</span> <span id="res-payment"></span></div>
                 <div><span class="font-bold text-gray-700">Order Ref:</span> <span id="res-ref" class="font-mono font-bold"></span></div>
             </div>
-            <button type="button" onclick="closeSuccessModal()" class="w-full bg-gray-900 text-white font-bold py-2.5 rounded-xl text-sm">
-                Done
-            </button>
+
+            <div class="space-y-2">
+                <a id="whatsapp-order-link" href="#" target="_blank" rel="noopener noreferrer" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>Open WhatsApp (+233 531780030)</span>
+                </a>
+                <button type="button" onclick="copyOrderSummary()" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2.5 rounded-xl text-xs">
+                    <i class="fa-regular fa-copy mr-1"></i> <span id="copy-btn-label">Copy Order Details</span>
+                </button>
+                <button type="button" onclick="closeSuccessModal()" class="w-full bg-gray-900 text-white font-bold py-2.5 rounded-xl text-xs">
+                    Done
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 py-6 text-center text-xs mt-auto">
-        <p>&copy; 2026 Stickify Campus. Male &amp; Female Laptop Stickers.</p>
+        <p>&copy; 2026 Stickify Campus. WhatsApp Orders: +233 531780030</p>
     </footer>
 
     <script>
+        const WHATSAPP_NUMBER = "233531780030";
         const defaultFlyerData = "";
         const defaultStickers = [
-            { id: 1, gender: "Male", price: 15, image: "💀⚡", bg: "bg-slate-100" },
-            { id: 2, gender: "Male", price: 15, image: "💻🔥", bg: "bg-blue-100" },
-            { id: 3, gender: "Male", price: 18, image: "🏎️💨", bg: "bg-red-100" },
-            { id: 4, gender: "Male", price: 15, image: "⚽👑", bg: "bg-emerald-100" },
-            { id: 5, gender: "Female", price: 15, image: "🌸✨", bg: "bg-pink-100" },
-            { id: 6, gender: "Female", price: 15, image: "🦋💜", bg: "bg-purple-100" },
-            { id: 7, gender: "Female", price: 15, image: "💖🌷", bg: "bg-rose-100" },
-            { id: 8, gender: "Female", price: 18, image: "🧋👑", bg: "bg-amber-100" }
+            { id: 1, gender: "Male", image: "💀⚡", bg: "bg-slate-100" },
+            { id: 2, gender: "Male", image: "💻🔥", bg: "bg-blue-100" },
+            { id: 3, gender: "Male", image: "🏎️💨", bg: "bg-red-100" },
+            { id: 4, gender: "Male", image: "⚽👑", bg: "bg-emerald-100" },
+            { id: 5, gender: "Female", image: "🌸✨", bg: "bg-pink-100" },
+            { id: 6, gender: "Female", image: "🦋💜", bg: "bg-purple-100" },
+            { id: 7, gender: "Female", image: "💖🌷", bg: "bg-rose-100" },
+            { id: 8, gender: "Female", image: "🧋👑", bg: "bg-amber-100" }
         ];
 
         let currentFlyer = localStorage.getItem('stickify_mf_flyer') || defaultFlyerData;
         let stickers = JSON.parse(localStorage.getItem('stickify_mf_stickers')) || defaultStickers;
         let selectedStickers = [];
+        let customerCustomPhoto = null;
+        let latestOrderMessage = "";
         let isUnlocked = false;
 
         function isImageSrc(val) {
@@ -423,21 +504,20 @@
         function renderStickerCard(sticker, index) {
             const isPicked = selectedStickers.some(s => s.id === sticker.id);
             const visual = isImageSrc(sticker.image)
-                ? `<img src="${sticker.image}" alt="Sticker ${index + 1}" class="h-24 w-24 object-contain">`
-                : `<div class="text-4xl select-none">${sticker.image}</div>`;
+                ? `<img src="${sticker.image}" alt="${sticker.gender} Sticker ${index + 1}" class="w-full h-full object-cover rounded-md">`
+                : `<div class="text-3xl select-none">${sticker.image}</div>`;
 
             const borderClass = isPicked
                 ? 'border-2 border-indigo-600 ring-2 ring-indigo-200 bg-indigo-50/30'
                 : 'border border-gray-200 bg-white hover:border-gray-300';
 
             return `
-                <div onclick="toggleStickerSelection(${sticker.id})" class="rounded-xl ${borderClass} p-3 flex flex-col items-center justify-between cursor-pointer transition select-none">
-                    <div class="w-full h-24 rounded-lg ${sticker.bg || 'bg-gray-100'} flex items-center justify-center p-2 mb-2">
+                <div onclick="toggleStickerSelection(${sticker.id})" class="rounded-xl ${borderClass} p-2.5 flex flex-col items-center justify-between cursor-pointer transition select-none">
+                    <div class="w-full aspect-[4/3] rounded-lg ${sticker.bg || 'bg-gray-100'} flex items-center justify-center overflow-hidden mb-2">
                         ${visual}
                     </div>
-                    <div class="w-full flex items-center justify-between">
-                        <span class="text-sm font-extrabold text-gray-900">GH₵ ${sticker.price}</span>
-                        <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${isPicked ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700'}">
+                    <div class="w-full flex items-center justify-end">
+                        <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full ${isPicked ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700'}">
                             ${isPicked ? 'Selected' : 'Pick'}
                         </span>
                     </div>
@@ -500,23 +580,57 @@
             }
             renderSides();
             renderSelectedSummary();
+            updateLaptopPreview();
+        }
+
+        function updateLaptopPreview() {
+            const stage = document.getElementById('laptop-stickers-stage');
+            const overlay = document.getElementById('laptop-lamination-overlay');
+            const badge = document.getElementById('preview-lamination-badge');
+            const lamination = document.querySelector('input[name="lamination"]:checked').value;
+
+            badge.innerText = `${lamination} Finish`;
+            overlay.className = 'pointer-events-none absolute inset-0 z-20 transition-all ' + (
+                lamination === 'Glossy' ? 'sheen-glossy' :
+                lamination === 'Crystal' ? 'sheen-crystal' :
+                'sheen-matte'
+            );
+
+            const items = [];
+            selectedStickers.forEach(s => {
+                if (isImageSrc(s.image)) {
+                    items.push(`<img src="${s.image}" alt="Sticker Preview" class="w-full aspect-[4/3] object-cover drop-shadow-md rounded bg-white/90">`);
+                } else {
+                    items.push(`<span class="w-full aspect-[4/3] flex items-center justify-center text-2xl sm:text-3xl drop-shadow-md bg-white/15 rounded-lg">${s.image}</span>`);
+                }
+            });
+
+            if (customerCustomPhoto) {
+                items.push(`<img src="${customerCustomPhoto.dataUrl}" alt="Custom Preview" class="w-full aspect-[4/3] object-cover drop-shadow-md rounded bg-white/95 ring-2 ring-amber-400">`);
+            }
+
+            if (items.length === 0) {
+                stage.innerHTML = `<p class="col-span-full text-xs text-slate-300/80 text-center">Tap a sticker or add your own picture to preview it on the laptop</p>`;
+            } else {
+                stage.innerHTML = items.join('');
+            }
         }
 
         function renderSelectedSummary() {
             const listEl = document.getElementById('selected-items-list');
-            const totalEl = document.getElementById('selected-total-display');
+            const countEl = document.getElementById('selected-count-display');
+            const totalItems = selectedStickers.length + (customerCustomPhoto ? 1 : 0);
 
-            if (selectedStickers.length === 0) {
-                listEl.innerHTML = `<p class="text-gray-400 italic">No stickers tapped yet. Tap stickers on the Male or Female side above.</p>`;
-                totalEl.innerText = 'GH₵ 0.00';
+            countEl.innerText = `${totalItems} selected`;
+
+            if (selectedStickers.length === 0 && !customerCustomPhoto) {
+                listEl.innerHTML = `<p class="text-gray-400 italic">No stickers tapped yet. Tap stickers on the Male or Female side above, or add your own picture below.</p>`;
                 return;
             }
 
-            let sum = 0;
-            listEl.innerHTML = selectedStickers.map((s, idx) => {
-                sum += Number(s.price) || 0;
+            let html = selectedStickers.map((s, idx) => {
                 const thumb = isImageSrc(s.image)
-                    ? `<img src="${s.image}" class="w-7 h-7 object-contain rounded bg-white border">`
+                    ? `<img src="${s.image}" class="w-10 aspect-[4/3] object-cover rounded bg-white border">`
                     : `<span class="text-base">${s.image}</span>`;
                 return `
                     <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-indigo-100">
@@ -524,15 +638,55 @@
                             ${thumb}
                             <span class="font-bold">${s.gender} Sticker #${idx + 1}</span>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <span class="font-extrabold text-gray-900">GH₵ ${s.price}</span>
-                            <button type="button" onclick="toggleStickerSelection(${s.id})" class="text-red-500 font-bold text-xs">Remove</button>
-                        </div>
+                        <button type="button" onclick="toggleStickerSelection(${s.id})" class="text-red-500 font-bold text-xs">Remove</button>
                     </div>
                 `;
             }).join('');
 
-            totalEl.innerText = `GH₵ ${sum.toFixed(2)}`;
+            if (customerCustomPhoto) {
+                html += `
+                    <div class="flex items-center justify-between bg-amber-50 px-2.5 py-1.5 rounded-lg border border-amber-200">
+                        <div class="flex items-center gap-2">
+                            <img src="${customerCustomPhoto.dataUrl}" class="w-10 aspect-[4/3] object-cover rounded bg-white border">
+                            <span class="font-bold">Custom Picture: ${customerCustomPhoto.name}</span>
+                        </div>
+                        <button type="button" onclick="clearCustomerCustomPhoto()" class="text-red-500 font-bold text-xs">Remove</button>
+                    </div>
+                `;
+            }
+
+            listEl.innerHTML = html;
+        }
+
+        // Customer Custom Photo
+        function handleCustomerCustomPhoto(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                customerCustomPhoto = {
+                    name: file.name,
+                    dataUrl: e.target.result
+                };
+                document.getElementById('customer-photo-preview').src = customerCustomPhoto.dataUrl;
+                document.getElementById('customer-photo-name').innerText = customerCustomPhoto.name;
+                document.getElementById('customer-photo-preview-box').classList.remove('hidden');
+                document.getElementById('clear-custom-photo-btn').classList.remove('hidden');
+                renderSelectedSummary();
+                updateLaptopPreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearCustomerCustomPhoto() {
+            customerCustomPhoto = null;
+            const input = document.getElementById('customer-custom-photo');
+            if (input) input.value = '';
+            document.getElementById('customer-photo-preview-box').classList.add('hidden');
+            document.getElementById('clear-custom-photo-btn').classList.add('hidden');
+            renderSelectedSummary();
+            updateLaptopPreview();
         }
 
         // Upload Modal
@@ -584,7 +738,6 @@
             if (!files.length) return;
 
             const gender = document.getElementById('upload-gender').value;
-            const price = Number(document.getElementById('upload-price').value) || 15;
             const statusEl = document.getElementById('upload-status');
             statusEl.innerText = `Uploading ${files.length} picture(s)...`;
 
@@ -595,7 +748,6 @@
                     stickers.unshift({
                         id: Date.now() + i + Math.floor(Math.random() * 1000),
                         gender,
-                        price,
                         image: e.target.result,
                         bg: gender === 'Male' ? 'bg-blue-50' : 'bg-pink-50'
                     });
@@ -621,22 +773,20 @@
             selectedStickers = selectedStickers.filter(s => s.id !== id);
             saveStickers();
             renderSelectedSummary();
+            updateLaptopPreview();
         }
 
         function renderAdminList() {
             document.getElementById('uploaded-count').innerText = stickers.length;
             document.getElementById('admin-sticker-list').innerHTML = stickers.map((s, i) => {
                 const thumb = isImageSrc(s.image)
-                    ? `<img src="${s.image}" class="w-9 h-9 object-contain rounded border bg-white">`
+                    ? `<img src="${s.image}" class="w-12 aspect-[4/3] object-cover rounded border bg-white">`
                     : `<span class="text-xl">${s.image}</span>`;
                 return `
                     <div class="flex items-center justify-between bg-gray-50 p-2 rounded-lg border border-gray-200 text-xs">
                         <div class="flex items-center gap-2.5">
                             ${thumb}
-                            <div>
-                                <div class="font-bold">${s.gender} #${i + 1}</div>
-                                <div class="text-gray-500">GH₵ ${s.price}</div>
-                            </div>
+                            <div class="font-bold">${s.gender} #${i + 1}</div>
                         </div>
                         <button type="button" onclick="deleteUploadedSticker(${s.id})" class="text-red-600 font-bold px-2 py-1">Delete</button>
                     </div>
@@ -662,7 +812,7 @@
             a.click();
         }
 
-        // Order Form
+        // Order Form & Direct WhatsApp Redirect
         function togglePaymentFields() {
             const method = document.querySelector('input[name="payment_method"]:checked').value;
             document.getElementById('momo-fields').style.display = method === 'Mobile Money' ? 'block' : 'none';
@@ -670,49 +820,82 @@
 
         function submitOrder(e) {
             e.preventDefault();
-            if (selectedStickers.length === 0) {
-                alert("Please tap at least one sticker from the Male or Female side first.");
+            if (selectedStickers.length === 0 && !customerCustomPhoto) {
+                alert("Please tap a sticker from the Male or Female side, or add a picture of your choice.");
                 return;
             }
 
-            const btn = document.getElementById('pay-btn');
-            const name = document.getElementById('cust-name').value;
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
             const section = document.querySelector('input[name="section"]:checked').value;
             const lamination = document.querySelector('input[name="lamination"]:checked').value;
-            const loc = document.getElementById('cust-campus-location').value;
+            const loc = document.getElementById('cust-campus-location').value.trim();
             const day = document.getElementById('cust-pickup-day').value;
             const time = document.getElementById('cust-pickup-time').value;
-            const sum = selectedStickers.reduce((acc, s) => acc + (Number(s.price) || 0), 0);
+            const payMethod = document.querySelector('input[name="payment_method"]:checked').value;
+            const momoNet = document.getElementById('momo-network').value;
+            const paymentText = payMethod === 'Mobile Money' ? `${payMethod} (${momoNet})` : payMethod;
+            const ref = 'STK-' + Math.floor(100000 + Math.random() * 900000);
 
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
-            btn.disabled = true;
+            const pickedLabels = selectedStickers.map(s => `${s.gender} sticker`).join(', ') || 'None picked';
+            const customPicText = customerCustomPhoto ? `Yes (${customerCustomPhoto.name})` : 'None added';
 
-            setTimeout(() => {
-                document.getElementById('res-name').innerText = name;
-                document.getElementById('res-spec').innerText = `${section} • ${lamination}`;
-                document.getElementById('res-total').innerText = `${selectedStickers.length} sticker(s) — GH₵ ${sum.toFixed(2)}`;
-                document.getElementById('res-loc').innerText = loc;
-                document.getElementById('res-datetime').innerText = `${day} at ${time}`;
-                document.getElementById('res-ref').innerText = 'STK-' + Math.floor(100000 + Math.random() * 900000);
-                document.getElementById('success-modal').classList.remove('hidden');
+            latestOrderMessage = [
+                `*New Sticker Order (${ref})*`,
+                `Name: ${name}`,
+                `Phone: ${phone}`,
+                `Section: ${section}`,
+                `Lamination: ${lamination}`,
+                `Stickers Picked: ${pickedLabels} (${selectedStickers.length})`,
+                `Custom Picture: ${customPicText}`,
+                `Pickup Place: ${loc}`,
+                `Pickup Day & Time: ${day} at ${time}`,
+                `Payment: ${paymentText}`,
+                customerCustomPhoto ? `(Note: I will attach my custom picture "${customerCustomPhoto.name}" in this chat)` : ''
+            ].filter(Boolean).join('\n');
 
-                btn.innerHTML = `<i class="fa-solid fa-lock"></i> <span>Pay & Confirm Campus Pickup</span>`;
-                btn.disabled = false;
-            }, 1000);
+            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(latestOrderMessage)}`;
+
+            document.getElementById('res-name').innerText = name;
+            document.getElementById('res-spec').innerText = `${section} • ${lamination}`;
+            document.getElementById('res-stickers').innerText = selectedStickers.length ? `${selectedStickers.length} sticker(s)` : 'None picked';
+            document.getElementById('res-custom-pic').innerText = customerCustomPhoto ? customerCustomPhoto.name : 'None added';
+            document.getElementById('res-loc').innerText = loc;
+            document.getElementById('res-datetime').innerText = `${day} at ${time}`;
+            document.getElementById('res-payment').innerText = paymentText;
+            document.getElementById('res-ref').innerText = ref;
+            document.getElementById('whatsapp-order-link').href = waUrl;
+            document.getElementById('copy-btn-label').innerText = 'Copy Order Details';
+
+            document.getElementById('success-modal').classList.remove('hidden');
+
+            window.open(waUrl, '_blank', 'noopener,noreferrer');
+        }
+
+        function copyOrderSummary() {
+            if (!latestOrderMessage) return;
+            navigator.clipboard.writeText(latestOrderMessage).then(() => {
+                document.getElementById('copy-btn-label').innerText = 'Copied!';
+            }).catch(() => {
+                alert("Could not copy automatically. Use Open WhatsApp.");
+            });
         }
 
         function closeSuccessModal() {
             document.getElementById('success-modal').classList.add('hidden');
             document.getElementById('order-form').reset();
             selectedStickers = [];
+            clearCustomerCustomPhoto();
             renderSides();
             renderSelectedSummary();
+            updateLaptopPreview();
         }
 
         document.getElementById('cust-pickup-day').min = new Date().toISOString().split('T')[0];
         renderFlyer();
         renderSides();
         renderSelectedSummary();
+        updateLaptopPreview();
     </script>
 </body>
 </html>
