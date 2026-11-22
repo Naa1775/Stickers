@@ -9,6 +9,32 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .laptop-lid {
+            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+            box-shadow: 0 20px 38px -12px rgba(15, 23, 42, 0.45);
+        }
+
+        /* Lamination Visual Effects Over Full Laptop Lid */
+        .finish-glossy {
+            background:
+                linear-gradient(122deg, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.12) 26%, rgba(255,255,255,0.0) 48%, rgba(255,255,255,0.22) 76%, rgba(255,255,255,0.04) 100%);
+            mix-blend-mode: screen;
+        }
+
+        .finish-crystal {
+            background-image:
+                radial-gradient(circle at 20% 25%, rgba(255,255,255,0.45) 0 1.5px, transparent 2px),
+                radial-gradient(circle at 65% 40%, rgba(255,255,255,0.38) 0 1.2px, transparent 1.8px),
+                radial-gradient(circle at 40% 75%, rgba(255,255,255,0.42) 0 1.5px, transparent 2px),
+                linear-gradient(135deg, rgba(255,255,255,0.16), rgba(186,230,253,0.14));
+            background-size: 28px 28px, 34px 34px, 30px 30px, 100% 100%;
+        }
+
+        .finish-matte {
+            background: rgba(15, 23, 42, 0.14);
+            backdrop-filter: saturate(0.88) contrast(0.96);
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
@@ -40,7 +66,7 @@
         <div class="max-w-3xl mx-auto">
             <span class="bg-white/20 text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Glossy &bull; Crystal &bull; Matte</span>
             <h1 class="text-2xl md:text-4xl font-extrabold mt-3 mb-2">Laptop Stickers — Male & Female</h1>
-            <p class="text-xs md:text-base text-indigo-100 mb-5">View the flyer, pick stickers from the Male or Female side—or add your own picture—choose your lamination, set your pickup place, day & time, and submit straight to WhatsApp.</p>
+            <p class="text-xs md:text-base text-indigo-100 mb-5">View the flyer, pick stickers from the Male or Female side—or add your own picture—preview it on a laptop, choose your price & lamination, set pickup details, and submit straight to WhatsApp.</p>
             <div class="flex flex-wrap justify-center gap-2.5">
                 <a href="#flyer-section" class="bg-white/15 hover:bg-white/25 text-white font-bold px-5 py-2.5 rounded-full text-xs md:text-sm border border-white/30 transition">
                     View Flyer
@@ -79,7 +105,7 @@
         <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
             <div>
                 <h2 class="text-xl md:text-2xl font-extrabold text-gray-900">Sticker Collection</h2>
-                <p class="text-xs text-gray-500">Tap any sticker to select it for your order</p>
+                <p class="text-xs text-gray-500">Tap any sticker to select it and preview it on the laptop</p>
             </div>
 
             <!-- View Filter (Both Sides / Male Only / Female Only) -->
@@ -116,11 +142,46 @@
         </div>
     </section>
 
-    <!-- ==================== ORDER, CUSTOM PICTURE, LAMINATION & PICKUP ==================== -->
+    <!-- ==================== ORDER, FULL-LID LAPTOP PREVIEW, PRICE & PICKUP ==================== -->
     <section id="order-section" class="max-w-2xl w-full mx-auto px-4 pb-12">
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 md:p-7">
             <h2 class="text-xl md:text-2xl font-extrabold text-gray-900 mb-1">Complete Your Order</h2>
-            <p class="text-xs text-gray-500 mb-5">Selected stickers, your own picture if you prefer, lamination finish, pickup place, day & time, and payment.</p>
+            <p class="text-xs text-gray-500 mb-5">Preview your chosen image covering the laptop lid, test Glossy / Crystal / Matte, pick 60, 80, or 100, and submit.</p>
+
+            <!-- Full-Lid Laptop Preview -->
+            <div class="bg-slate-100 border border-slate-200 rounded-2xl p-4 mb-5">
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <span class="text-xs font-extrabold uppercase tracking-wide text-slate-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-laptop text-indigo-600"></i> Full Laptop Preview
+                    </span>
+                    <span id="preview-finish-badge" class="text-[11px] font-bold bg-white text-indigo-700 border border-indigo-200 px-2.5 py-0.5 rounded-full">
+                        Glossy Finish
+                    </span>
+                </div>
+
+                <!-- Laptop Lid Frame -->
+                <div class="mx-auto max-w-lg">
+                    <div class="laptop-lid relative rounded-2xl border-4 border-slate-700 aspect-[16/10] w-full overflow-hidden">
+                        <!-- Image Covering Whole Laptop Lid -->
+                        <div id="laptop-full-lid-content" class="w-full h-full flex items-center justify-center">
+                            <div class="text-center px-4">
+                                <i class="fa-solid fa-laptop text-3xl text-slate-400 mb-2"></i>
+                                <p class="text-xs text-slate-300">Tap a sticker or add your own picture to cover the laptop lid</p>
+                            </div>
+                        </div>
+
+                        <!-- Glossy / Crystal / Matte Effect Layer Over Full Lid -->
+                        <div id="laptop-finish-overlay" class="pointer-events-none absolute inset-0 z-20 finish-glossy transition-all duration-200"></div>
+
+                        <!-- Subtle Finish Label Pill -->
+                        <div id="laptop-finish-tag" class="pointer-events-none absolute bottom-2.5 right-2.5 z-30 bg-black/65 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">
+                            GLOSSY
+                        </div>
+                    </div>
+                    <!-- Laptop Base Edge -->
+                    <div class="mx-auto h-2.5 w-[104%] -ml-[2%] bg-gradient-to-b from-slate-300 to-slate-400 rounded-b-xl shadow-md"></div>
+                </div>
+            </div>
 
             <!-- Selected Stickers Summary -->
             <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-3.5 mb-5">
@@ -160,6 +221,31 @@
                     </div>
                 </div>
 
+                <!-- Price Choice: 60, 80, 100 -->
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-600 mb-1.5">Choose Price (GH₵)</label>
+                    <div class="grid grid-cols-3 gap-2.5">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="order_price" value="60" checked class="peer sr-only">
+                            <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 text-center text-sm font-extrabold transition">
+                                GH₵ 60
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="order_price" value="80" class="peer sr-only">
+                            <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 text-center text-sm font-extrabold transition">
+                                GH₵ 80
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="order_price" value="100" class="peer sr-only">
+                            <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 text-center text-sm font-extrabold transition">
+                                GH₵ 100
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
                 <!-- Section (Male or Female only) -->
                 <div>
                     <label class="block text-xs font-bold uppercase text-gray-600 mb-1.5">Section</label>
@@ -184,27 +270,40 @@
                     <label class="block text-xs font-bold uppercase text-gray-600 mb-1.5">Lamination Type</label>
                     <div class="grid grid-cols-3 gap-2">
                         <label class="cursor-pointer">
-                            <input type="radio" name="lamination" value="Glossy" checked class="peer sr-only">
+                            <input type="radio" name="lamination" value="Glossy" checked onchange="updateLaptopPreview()" class="peer sr-only">
                             <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 px-2 text-center transition">
                                 <div class="text-xs font-extrabold">Glossy</div>
                                 <div class="text-[10px] text-gray-500">Shiny finish</div>
                             </div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="lamination" value="Crystal" class="peer sr-only">
+                            <input type="radio" name="lamination" value="Crystal" onchange="updateLaptopPreview()" class="peer sr-only">
                             <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 px-2 text-center transition">
                                 <div class="text-xs font-extrabold">Crystal</div>
                                 <div class="text-[10px] text-gray-500">Textured & strong</div>
                             </div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="lamination" value="Matte" class="peer sr-only">
+                            <input type="radio" name="lamination" value="Matte" onchange="updateLaptopPreview()" class="peer sr-only">
                             <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl py-2.5 px-2 text-center transition">
                                 <div class="text-xs font-extrabold">Matte</div>
                                 <div class="text-[10px] text-gray-500">Smooth & non-glare</div>
                             </div>
                         </label>
                     </div>
+                </div>
+
+                <!-- Pay to This Number Box -->
+                <div class="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-800">Pay to This Number</div>
+                        <div class="text-base md:text-lg font-extrabold text-gray-900 mt-0.5">+233 531780030</div>
+                        <p class="text-[11px] text-emerald-900/80">Submit your order first, copy the number, and pay the normal way.</p>
+                    </div>
+                    <button type="button" onclick="copyPaymentNumber()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition shrink-0">
+                        <i class="fa-regular fa-copy"></i>
+                        <span id="copy-pay-num-label">Copy Number</span>
+                    </button>
                 </div>
 
                 <!-- Customer Name & Phone -->
@@ -280,29 +379,34 @@
         <img id="flyer-zoom-img" src="" alt="Full Flyer" class="max-h-[90vh] max-w-full rounded-xl shadow-2xl">
     </div>
 
-    <!-- ==================== UPLOAD & EDIT MODAL (STICKERS + FLYER) ==================== -->
+    <!-- ==================== ADMIN UPLOAD & EDIT MODAL (PASSWORD: 117286) ==================== -->
     <div id="upload-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
         <div onclick="closeUploadModal()" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         <div class="relative bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl z-10 max-h-[92vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-extrabold flex items-center gap-2">
-                    <i class="fa-solid fa-cloud-arrow-up text-indigo-600"></i> Upload Stickers & Flyer
+                    <i class="fa-solid fa-shield-halved text-indigo-600"></i> Admin Upload & Edit
                 </h3>
                 <button type="button" onclick="closeUploadModal()" class="text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
             </div>
 
-            <!-- Password Box -->
+            <!-- Admin Password Gate -->
             <div id="admin-login-box" class="space-y-3 py-2">
-                <p class="text-xs text-gray-600">Enter password to upload stickers or your flyer:</p>
-                <input type="password" id="admin-pass-input" placeholder="Password (default: admin123)" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
-                <p id="admin-pass-error" class="text-xs text-red-600 hidden">Wrong password. Try again.</p>
-                <button type="button" onclick="verifyAdminLogin()" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-sm">
-                    Unlock
+                <p class="text-xs text-gray-600">Admin access only. Enter admin password to continue:</p>
+                <input type="password" id="admin-pass-input" placeholder="Enter admin password" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                <p id="admin-pass-error" class="text-xs text-red-600 hidden">Incorrect admin password. Access denied.</p>
+                <button type="button" onclick="verifyAdminLogin()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl text-sm">
+                    Verify Admin Access
                 </button>
             </div>
 
-            <!-- Upload & Manage Controls -->
+            <!-- Admin Controls (Only Accessible After Passing 117286) -->
             <div id="admin-upload-box" class="hidden space-y-5">
+                <div class="flex items-center justify-between bg-gray-100 px-3 py-2 rounded-lg text-xs">
+                    <span class="font-bold text-gray-700"><i class="fa-solid fa-lock-open text-green-600 mr-1"></i> Admin Mode Active</span>
+                    <button type="button" onclick="lockAdminSession()" class="font-bold text-red-600 hover:underline">Lock Admin</button>
+                </div>
+
                 <!-- Flyer Upload Box -->
                 <div class="bg-purple-50/70 border border-purple-100 p-4 rounded-xl space-y-2.5">
                     <h4 class="font-bold text-xs uppercase text-purple-900">Upload / Change Flyer Image</h4>
@@ -316,7 +420,7 @@
 
                 <!-- Stickers Upload Box -->
                 <div class="bg-indigo-50/70 border border-indigo-100 p-4 rounded-xl space-y-3">
-                    <h4 class="font-bold text-xs uppercase text-indigo-900">Add More Pictures (Male or Female)</h4>
+                    <h4 class="font-bold text-xs uppercase text-indigo-900">Upload Pictures (Male or Female)</h4>
                     <div>
                         <label class="block text-[11px] font-bold uppercase text-gray-600 mb-1">Put On Side</label>
                         <select id="upload-gender" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold">
@@ -328,10 +432,10 @@
                     <div>
                         <label for="sticker-file-input" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 cursor-pointer shadow">
                             <i class="fa-solid fa-upload"></i>
-                            <span>Add Sticker Pictures</span>
+                            <span>Upload Sticker Pictures</span>
                         </label>
                         <input type="file" id="sticker-file-input" accept="image/*" multiple onchange="handleStickerFiles(event)" class="sr-only">
-                        <p id="upload-status" class="text-[11px] text-gray-500 mt-1.5">Select multiple pictures at once to add more to Male or Female.</p>
+                        <p id="upload-status" class="text-[11px] text-gray-500 mt-1.5">Select as many pictures as you want on either side.</p>
                     </div>
                 </div>
 
@@ -363,9 +467,10 @@
             <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-3">
                 <i class="fa-brands fa-whatsapp"></i>
             </div>
-            <h3 class="text-xl font-extrabold mb-1">Opening WhatsApp...</h3>
-            <p class="text-xs text-gray-600 mb-4">Your order for <span id="res-name" class="font-bold text-gray-900"></span> is prepared for <strong>+233 531780030</strong>:</p>
+            <h3 class="text-xl font-extrabold mb-1">Order Sent to WhatsApp</h3>
+            <p class="text-xs text-gray-600 mb-4">Order for <span id="res-name" class="font-bold text-gray-900"></span> • Pay to <strong>+233 531780030</strong>:</p>
             <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-xl text-left text-xs space-y-2 mb-4">
+                <div><span class="font-bold text-gray-700">Price:</span> <span id="res-price" class="font-extrabold text-indigo-700"></span></div>
                 <div><span class="font-bold text-gray-700">Section & Lamination:</span> <span id="res-spec"></span></div>
                 <div>
                     <div class="font-bold text-gray-700 mb-1">Selected Pictures in Order:</div>
@@ -378,6 +483,9 @@
             </div>
 
             <div class="space-y-2">
+                <button type="button" onclick="copyPaymentNumber()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs">
+                    <i class="fa-regular fa-copy mr-1"></i> Copy Payment Number (+233 531780030)
+                </button>
                 <a id="whatsapp-order-link" href="#" target="_blank" rel="noopener noreferrer" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow">
                     <i class="fa-brands fa-whatsapp text-sm"></i>
                     <span>Open WhatsApp (+233 531780030)</span>
@@ -394,11 +502,13 @@
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 py-6 text-center text-xs mt-auto">
-        <p>&copy; 2026 Stickify Campus. WhatsApp Orders: +233 531780030</p>
+        <p>&copy; 2026 Stickify Campus. Pay &amp; Order WhatsApp: +233 531780030</p>
     </footer>
 
     <script>
         const WHATSAPP_NUMBER = "233531780030";
+        const PAY_DISPLAY_NUMBER = "+233 531780030";
+        const ADMIN_PASSCODE = "117286";
         const defaultFlyerData = "";
         const defaultStickers = [
             { id: 1, gender: "Male", label: "Male Sticker 1", image: "💀⚡", bg: "bg-slate-100" },
@@ -440,7 +550,7 @@
         let selectedStickers = [];
         let customerCustomPhoto = null;
         let latestOrderMessage = "";
-        let isUnlocked = false;
+        let isAdminAuthenticated = false;
 
         function isImageSrc(val) {
             return typeof val === 'string' && (
@@ -465,7 +575,7 @@
                     <div class="text-center py-10 px-4">
                         <i class="fa-solid fa-file-image text-4xl text-gray-400 mb-3"></i>
                         <p class="font-bold text-sm text-gray-700">No Flyer Uploaded Yet</p>
-                        <p class="text-xs text-gray-500 mt-1 mb-4">Tap "Upload / Edit" at the top to add your sticker flyer.</p>
+                        <p class="text-xs text-gray-500 mt-1 mb-4">Admin can tap "Upload / Edit" at the top to add the sticker flyer.</p>
                         <button type="button" onclick="openUploadModal()" class="bg-indigo-600 text-white font-bold px-4 py-2 rounded-xl text-xs">
                             Upload Flyer
                         </button>
@@ -519,11 +629,11 @@
 
             document.getElementById('male-grid').innerHTML = maleList.length
                 ? maleList.map((s, i) => renderStickerCard(s, i)).join('')
-                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Male stickers yet. Tap "Upload / Edit" to add Male pictures.</p>`;
+                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Male stickers yet.</p>`;
 
             document.getElementById('female-grid').innerHTML = femaleList.length
                 ? femaleList.map((s, i) => renderStickerCard(s, i)).join('')
-                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Female stickers yet. Tap "Upload / Edit" to add Female pictures.</p>`;
+                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Female stickers yet.</p>`;
         }
 
         function setSideView(mode) {
@@ -565,6 +675,47 @@
             }
             renderSides();
             renderSelectedSummary();
+            updateLaptopPreview();
+        }
+
+        function updateLaptopPreview() {
+            const lidContent = document.getElementById('laptop-full-lid-content');
+            const overlay = document.getElementById('laptop-finish-overlay');
+            const badge = document.getElementById('preview-finish-badge');
+            const finishTag = document.getElementById('laptop-finish-tag');
+            const lamination = document.querySelector('input[name="lamination"]:checked').value;
+
+            badge.innerText = `${lamination} Finish`;
+            finishTag.innerText = lamination.toUpperCase();
+            overlay.className = 'pointer-events-none absolute inset-0 z-20 transition-all duration-200 ' + (
+                lamination === 'Glossy' ? 'finish-glossy' :
+                lamination === 'Crystal' ? 'finish-crystal' :
+                'finish-matte'
+            );
+
+            // Show the latest chosen image or custom photo covering the full laptop lid
+            let activeVisual = null;
+            if (customerCustomPhoto) {
+                activeVisual = { type: 'image', src: customerCustomPhoto.dataUrl, alt: customerCustomPhoto.name };
+            } else if (selectedStickers.length > 0) {
+                const latest = selectedStickers[selectedStickers.length - 1];
+                activeVisual = isImageSrc(latest.image)
+                    ? { type: 'image', src: latest.image, alt: latest.label || 'Sticker' }
+                    : { type: 'emoji', src: latest.image, bg: latest.bg || 'bg-indigo-900' };
+            }
+
+            if (!activeVisual) {
+                lidContent.innerHTML = `
+                    <div class="text-center px-4">
+                        <i class="fa-solid fa-laptop text-3xl text-slate-400 mb-2"></i>
+                        <p class="text-xs text-slate-300">Tap a sticker or add your own picture to cover the laptop lid</p>
+                    </div>
+                `;
+            } else if (activeVisual.type === 'image') {
+                lidContent.innerHTML = `<img src="${activeVisual.src}" alt="${activeVisual.alt}" class="w-full h-full object-cover">`;
+            } else {
+                lidContent.innerHTML = `<div class="w-full h-full ${activeVisual.bg} flex items-center justify-center text-6xl sm:text-7xl select-none">${activeVisual.src}</div>`;
+            }
         }
 
         function renderSelectedSummary() {
@@ -610,7 +761,7 @@
             listEl.innerHTML = html;
         }
 
-        // Resize uploaded image so many more pictures fit comfortably
+        // Fast image resizing so unlimited batches stay responsive
         function resizeFileToDataUrl(file, maxWidth, quality, callback) {
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -642,7 +793,7 @@
             const file = event.target.files && event.target.files[0];
             if (!file) return;
 
-            resizeFileToDataUrl(file, 700, 0.82, function(dataUrl) {
+            resizeFileToDataUrl(file, 900, 0.84, function(dataUrl) {
                 customerCustomPhoto = {
                     name: file.name,
                     dataUrl
@@ -652,6 +803,7 @@
                 document.getElementById('customer-photo-preview-box').classList.remove('hidden');
                 document.getElementById('clear-custom-photo-btn').classList.remove('hidden');
                 renderSelectedSummary();
+                updateLaptopPreview();
             });
         }
 
@@ -662,16 +814,28 @@
             document.getElementById('customer-photo-preview-box').classList.add('hidden');
             document.getElementById('clear-custom-photo-btn').classList.add('hidden');
             renderSelectedSummary();
+            updateLaptopPreview();
         }
 
-        // Upload Modal
-        function openUploadModal() {
-            document.getElementById('upload-modal').classList.remove('hidden');
-            if (isUnlocked) {
-                document.getElementById('admin-login-box').classList.add('hidden');
-                document.getElementById('admin-upload-box').classList.remove('hidden');
+        // Admin Modal (Password Strictly 117286)
+        function syncAdminModalUI() {
+            const loginBox = document.getElementById('admin-login-box');
+            const uploadBox = document.getElementById('admin-upload-box');
+            if (isAdminAuthenticated) {
+                loginBox.classList.add('hidden');
+                uploadBox.classList.remove('hidden');
                 renderAdminList();
+            } else {
+                uploadBox.classList.add('hidden');
+                loginBox.classList.remove('hidden');
+                document.getElementById('admin-pass-input').value = '';
+                document.getElementById('admin-pass-error').classList.add('hidden');
             }
+        }
+
+        function openUploadModal() {
+            syncAdminModalUI();
+            document.getElementById('upload-modal').classList.remove('hidden');
         }
 
         function closeUploadModal() {
@@ -680,24 +844,27 @@
 
         function verifyAdminLogin() {
             const pass = document.getElementById('admin-pass-input').value.trim();
-            if (pass === 'admin123') {
-                isUnlocked = true;
-                document.getElementById('admin-pass-error').classList.add('hidden');
-                document.getElementById('admin-login-box').classList.add('hidden');
-                document.getElementById('admin-upload-box').classList.remove('hidden');
-                renderAdminList();
+            if (pass === ADMIN_PASSCODE) {
+                isAdminAuthenticated = true;
+                syncAdminModalUI();
             } else {
                 document.getElementById('admin-pass-error').classList.remove('hidden');
             }
         }
 
+        function lockAdminSession() {
+            isAdminAuthenticated = false;
+            syncAdminModalUI();
+        }
+
         function handleFlyerFile(event) {
+            if (!isAdminAuthenticated) return;
             const file = event.target.files && event.target.files[0];
             if (!file) return;
             const statusEl = document.getElementById('flyer-upload-status');
             statusEl.innerText = "Uploading flyer...";
 
-            resizeFileToDataUrl(file, 1000, 0.85, function(dataUrl) {
+            resizeFileToDataUrl(file, 1080, 0.85, function(dataUrl) {
                 currentFlyer = dataUrl;
                 try {
                     localStorage.setItem('stickify_mf_flyer', currentFlyer);
@@ -709,6 +876,7 @@
         }
 
         function handleStickerFiles(event) {
+            if (!isAdminAuthenticated) return;
             const files = Array.from(event.target.files || []);
             if (!files.length) return;
 
@@ -716,19 +884,22 @@
             const statusEl = document.getElementById('upload-status');
             statusEl.innerText = `Adding ${files.length} picture(s) to ${gender}...`;
 
+            const newItems = new Array(files.length);
             let doneCount = 0;
+
             files.forEach((file, i) => {
                 const cleanName = file.name.replace(/\.[^/.]+$/, '').slice(0, 24) || `${gender} Picture`;
-                resizeFileToDataUrl(file, 650, 0.78, function(dataUrl) {
-                    stickers.unshift({
+                resizeFileToDataUrl(file, 720, 0.8, function(dataUrl) {
+                    newItems[i] = {
                         id: Date.now() + i + Math.floor(Math.random() * 10000),
                         gender,
                         label: `${gender}: ${cleanName}`,
                         image: dataUrl,
                         bg: gender === 'Male' ? 'bg-blue-50' : 'bg-pink-50'
-                    });
+                    };
                     doneCount++;
                     if (doneCount === files.length) {
+                        stickers = [...newItems.filter(Boolean), ...stickers];
                         saveStickers();
                         event.target.value = '';
                         statusEl.innerText = `Added ${files.length} picture(s) to ${gender}!`;
@@ -741,13 +912,16 @@
             try {
                 localStorage.setItem('stickify_mf_stickers', JSON.stringify(stickers));
             } catch (e) {
-                alert("Browser storage is full, so pictures are active on this page—tap 'Download Updated index.html' below to save them permanently.");
+                alert("Browser storage is full, so pictures stay active on this page—tap 'Download Updated index.html' below to save them permanently.");
             }
             renderSides();
-            renderAdminList();
+            if (isAdminAuthenticated) {
+                renderAdminList();
+            }
         }
 
         function resetDefaultStickers() {
+            if (!isAdminAuthenticated) return;
             stickers = defaultStickers.slice();
             selectedStickers = [];
             try {
@@ -756,16 +930,20 @@
             renderSides();
             renderAdminList();
             renderSelectedSummary();
+            updateLaptopPreview();
         }
 
         function deleteUploadedSticker(id) {
+            if (!isAdminAuthenticated) return;
             stickers = stickers.filter(s => s.id !== id);
             selectedStickers = selectedStickers.filter(s => s.id !== id);
             saveStickers();
             renderSelectedSummary();
+            updateLaptopPreview();
         }
 
         function renderAdminList() {
+            if (!isAdminAuthenticated) return;
             document.getElementById('uploaded-count').innerText = stickers.length;
             document.getElementById('admin-sticker-list').innerHTML = stickers.map((s, i) => {
                 const title = s.label || `${s.gender} #${i + 1}`;
@@ -785,6 +963,7 @@
         }
 
         function downloadUpdatedHTML() {
+            if (!isAdminAuthenticated) return;
             let htmlContent = document.documentElement.outerHTML;
             htmlContent = htmlContent.replace(
                 /const defaultFlyerData = ".*?";/,
@@ -802,6 +981,27 @@
             a.click();
         }
 
+        // Copy Payment Number & Order Summary
+        function copyPaymentNumber() {
+            navigator.clipboard.writeText(PAY_DISPLAY_NUMBER).then(() => {
+                document.getElementById('copy-pay-num-label').innerText = 'Copied!';
+                setTimeout(() => {
+                    document.getElementById('copy-pay-num-label').innerText = 'Copy Number';
+                }, 2000);
+            }).catch(() => {
+                alert(`Pay to: ${PAY_DISPLAY_NUMBER}`);
+            });
+        }
+
+        function copyOrderSummary() {
+            if (!latestOrderMessage) return;
+            navigator.clipboard.writeText(latestOrderMessage).then(() => {
+                document.getElementById('copy-btn-label').innerText = 'Copied!';
+            }).catch(() => {
+                alert("Could not copy automatically. Use Open WhatsApp.");
+            });
+        }
+
         // Order Form & Direct WhatsApp Redirect
         function togglePaymentFields() {
             const method = document.querySelector('input[name="payment_method"]:checked').value;
@@ -817,6 +1017,7 @@
 
             const name = document.getElementById('cust-name').value.trim();
             const phone = document.getElementById('cust-phone').value.trim();
+            const chosenPrice = document.querySelector('input[name="order_price"]:checked').value;
             const section = document.querySelector('input[name="section"]:checked').value;
             const lamination = document.querySelector('input[name="lamination"]:checked').value;
             const loc = document.getElementById('cust-campus-location').value.trim();
@@ -827,7 +1028,6 @@
             const paymentText = payMethod === 'Mobile Money' ? `${payMethod} (${momoNet})` : payMethod;
             const ref = 'STK-' + Math.floor(100000 + Math.random() * 900000);
 
-            // Render visual list of selected pictures in confirmation modal
             const picCards = [];
             const waPictureLines = [];
 
@@ -859,6 +1059,8 @@
 
             latestOrderMessage = [
                 `*New Sticker Order (${ref})*`,
+                `Price: GH₵ ${chosenPrice}`,
+                `Pay To Number: ${PAY_DISPLAY_NUMBER}`,
                 `Name: ${name}`,
                 `Phone: ${phone}`,
                 `Section: ${section}`,
@@ -874,6 +1076,7 @@
             const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(latestOrderMessage)}`;
 
             document.getElementById('res-name').innerText = name;
+            document.getElementById('res-price').innerText = `GH₵ ${chosenPrice}`;
             document.getElementById('res-spec').innerText = `${section} • ${lamination}`;
             document.getElementById('res-loc').innerText = loc;
             document.getElementById('res-datetime').innerText = `${day} at ${time}`;
@@ -887,15 +1090,6 @@
             window.open(waUrl, '_blank', 'noopener,noreferrer');
         }
 
-        function copyOrderSummary() {
-            if (!latestOrderMessage) return;
-            navigator.clipboard.writeText(latestOrderMessage).then(() => {
-                document.getElementById('copy-btn-label').innerText = 'Copied!';
-            }).catch(() => {
-                alert("Could not copy automatically. Use Open WhatsApp.");
-            });
-        }
-
         function closeSuccessModal() {
             document.getElementById('success-modal').classList.add('hidden');
             document.getElementById('order-form').reset();
@@ -903,12 +1097,14 @@
             clearCustomerCustomPhoto();
             renderSides();
             renderSelectedSummary();
+            updateLaptopPreview();
         }
 
         document.getElementById('cust-pickup-day').min = new Date().toISOString().split('T')[0];
         renderFlyer();
         renderSides();
         renderSelectedSummary();
+        updateLaptopPreview();
     </script>
 </body>
 </html>
