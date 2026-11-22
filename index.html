@@ -178,3 +178,445 @@
 
                 <!-- Day and Time for Pickup -->
                 <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Day for Pickup</label>
+                        <input type="date" id="cust-pickup-day" required class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Time for Pickup</label>
+                        <input type="time" id="cust-pickup-time" required class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-600 mb-1.5">Payment Method</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment_method" value="Mobile Money" checked class="peer sr-only" onchange="togglePaymentFields()">
+                            <div class="border-2 border-gray-200 peer-checked:border-amber-400 peer-checked:bg-amber-50 rounded-xl p-2.5 text-center transition">
+                                <i class="fa-solid fa-mobile-screen-button text-base text-amber-500"></i>
+                                <div class="text-xs font-bold mt-0.5">Mobile Money</div>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment_method" value="Card" class="peer sr-only" onchange="togglePaymentFields()">
+                            <div class="border-2 border-gray-200 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 rounded-xl p-2.5 text-center transition">
+                                <i class="fa-regular fa-credit-card text-base text-indigo-600"></i>
+                                <div class="text-xs font-bold mt-0.5">Card Payment</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="momo-fields">
+                    <label class="block text-xs font-bold uppercase text-gray-600 mb-1">MoMo Network</label>
+                    <select id="momo-network" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                        <option>MTN Mobile Money</option>
+                        <option>Telecel Cash</option>
+                        <option>ATMoney</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="pay-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-lock"></i> <span>Pay & Confirm Campus Pickup</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ==================== UPLOAD & EDIT STICKERS MODAL ==================== -->
+    <div id="upload-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div onclick="closeUploadModal()" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div class="relative bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl z-10 max-h-[92vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-extrabold flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up text-indigo-600"></i> Upload Stickers
+                </h3>
+                <button type="button" onclick="closeUploadModal()" class="text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
+
+            <!-- Password Box -->
+            <div id="admin-login-box" class="space-y-3 py-2">
+                <p class="text-xs text-gray-600">Enter password to upload stickers to the Male or Female side:</p>
+                <input type="password" id="admin-pass-input" placeholder="Password (default: admin123)" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-600">
+                <p id="admin-pass-error" class="text-xs text-red-600 hidden">Wrong password. Try again.</p>
+                <button type="button" onclick="verifyAdminLogin()" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-sm">
+                    Unlock
+                </button>
+            </div>
+
+            <!-- Upload & Manage Controls -->
+            <div id="admin-upload-box" class="hidden space-y-4">
+                <div class="bg-indigo-50/70 border border-indigo-100 p-4 rounded-xl space-y-3">
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-gray-600 mb-1">Put On Side</label>
+                            <select id="upload-gender" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-gray-600 mb-1">Price (GH₵)</label>
+                            <input type="number" id="upload-price" value="15" min="1" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold">
+                        </div>
+                    </div>
+
+                    <!-- Single Upload Button -->
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-gray-600 mb-1.5">Select Sticker Picture(s)</label>
+                        <label for="sticker-file-input" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 cursor-pointer shadow">
+                            <i class="fa-solid fa-upload"></i>
+                            <span>Upload Sticker Pictures</span>
+                        </label>
+                        <input type="file" id="sticker-file-input" accept="image/*" multiple onchange="handleStickerFiles(event)" class="sr-only">
+                        <p id="upload-status" class="text-[11px] text-gray-500 mt-1.5">You can pick one or multiple pictures at once.</p>
+                    </div>
+                </div>
+
+                <!-- Uploaded Stickers List -->
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-gray-500 mb-2">Uploaded Stickers (<span id="uploaded-count">0</span>)</h4>
+                    <div id="admin-sticker-list" class="space-y-2 max-h-52 overflow-y-auto pr-1"></div>
+                </div>
+
+                <!-- Download Updated HTML -->
+                <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-xs space-y-2">
+                    <div class="font-bold text-amber-900">Save File for GitHub / Hosting</div>
+                    <p class="text-amber-800">Download the updated file with your uploaded stickers saved inside:</p>
+                    <button type="button" onclick="downloadUpdatedHTML()" class="w-full bg-gray-900 text-white font-bold py-2 rounded-lg text-xs">
+                        <i class="fa-solid fa-download mr-1"></i> Download Updated index.html
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ORDER SUCCESS MODAL ==================== -->
+    <div id="success-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div class="relative bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl z-10">
+            <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-3">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-xl font-extrabold mb-1">Order Confirmed!</h3>
+            <p class="text-xs text-gray-600 mb-4">Thank you, <span id="res-name" class="font-bold text-gray-900"></span>! Your pickup details:</p>
+            <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-xl text-left text-xs space-y-1.5 mb-4">
+                <div><span class="font-bold text-gray-700">Section & Lamination:</span> <span id="res-spec"></span></div>
+                <div><span class="font-bold text-gray-700">Stickers & Total:</span> <span id="res-total" class="font-bold text-indigo-700"></span></div>
+                <div><span class="font-bold text-gray-700">Campus Location:</span> <span id="res-loc"></span></div>
+                <div><span class="font-bold text-gray-700">Day & Time:</span> <span id="res-datetime"></span></div>
+                <div><span class="font-bold text-gray-700">Order Ref:</span> <span id="res-ref" class="font-mono font-bold"></span></div>
+            </div>
+            <button type="button" onclick="closeSuccessModal()" class="w-full bg-gray-900 text-white font-bold py-2.5 rounded-xl text-sm">
+                Done
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-6 text-center text-xs mt-auto">
+        <p>&copy; 2026 Stickify Campus. Male &amp; Female Laptop Stickers.</p>
+    </footer>
+
+    <script>
+        const defaultStickers = [
+            { id: 1, gender: "Male", price: 15, image: "💀⚡", bg: "bg-slate-100" },
+            { id: 2, gender: "Male", price: 15, image: "💻🔥", bg: "bg-blue-100" },
+            { id: 3, gender: "Male", price: 18, image: "🏎️💨", bg: "bg-red-100" },
+            { id: 4, gender: "Male", price: 15, image: "⚽👑", bg: "bg-emerald-100" },
+            { id: 5, gender: "Female", price: 15, image: "🌸✨", bg: "bg-pink-100" },
+            { id: 6, gender: "Female", price: 15, image: "🦋💜", bg: "bg-purple-100" },
+            { id: 7, gender: "Female", price: 15, image: "💖🌷", bg: "bg-rose-100" },
+            { id: 8, gender: "Female", price: 18, image: "🧋👑", bg: "bg-amber-100" }
+        ];
+
+        let stickers = JSON.parse(localStorage.getItem('stickify_mf_stickers')) || defaultStickers;
+        let selectedStickers = [];
+        let isUnlocked = false;
+
+        function isImageSrc(val) {
+            return typeof val === 'string' && (
+                val.startsWith('data:image') ||
+                val.startsWith('http') ||
+                val.endsWith('.png') ||
+                val.endsWith('.jpg') ||
+                val.endsWith('.jpeg') ||
+                val.endsWith('.webp') ||
+                val.endsWith('.gif')
+            );
+        }
+
+        function renderStickerCard(sticker, index) {
+            const isPicked = selectedStickers.some(s => s.id === sticker.id);
+            const visual = isImageSrc(sticker.image)
+                ? `<img src="${sticker.image}" alt="Sticker ${index + 1}" class="h-24 w-24 object-contain">`
+                : `<div class="text-4xl select-none">${sticker.image}</div>`;
+
+            const borderClass = isPicked
+                ? 'border-2 border-indigo-600 ring-2 ring-indigo-200 bg-indigo-50/30'
+                : 'border border-gray-200 bg-white hover:border-gray-300';
+
+            return `
+                <div onclick="toggleStickerSelection(${sticker.id})" class="rounded-xl ${borderClass} p-3 flex flex-col items-center justify-between cursor-pointer transition select-none">
+                    <div class="w-full h-24 rounded-lg ${sticker.bg || 'bg-gray-100'} flex items-center justify-center p-2 mb-2">
+                        ${visual}
+                    </div>
+                    <div class="w-full flex items-center justify-between">
+                        <span class="text-sm font-extrabold text-gray-900">GH₵ ${sticker.price}</span>
+                        <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${isPicked ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700'}">
+                            ${isPicked ? 'Selected' : 'Pick'}
+                        </span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSides() {
+            const maleList = stickers.filter(s => s.gender === 'Male');
+            const femaleList = stickers.filter(s => s.gender === 'Female');
+
+            document.getElementById('male-count').innerText = `${maleList.length} sticker${maleList.length === 1 ? '' : 's'}`;
+            document.getElementById('female-count').innerText = `${femaleList.length} sticker${femaleList.length === 1 ? '' : 's'}`;
+
+            document.getElementById('male-grid').innerHTML = maleList.length
+                ? maleList.map((s, i) => renderStickerCard(s, i)).join('')
+                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Male stickers yet.</p>`;
+
+            document.getElementById('female-grid').innerHTML = femaleList.length
+                ? femaleList.map((s, i) => renderStickerCard(s, i)).join('')
+                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Female stickers yet.</p>`;
+        }
+
+        function setSideView(mode) {
+            const container = document.getElementById('sides-container');
+            const maleBox = document.getElementById('side-male-box');
+            const femaleBox = document.getElementById('side-female-box');
+
+            ['both', 'Male', 'Female'].forEach(m => {
+                const btn = document.getElementById(`view-${m}`);
+                btn.className = m === mode
+                    ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-900 text-white'
+                    : 'px-3 py-1.5 rounded-lg text-xs font-bold text-gray-700 hover:bg-gray-100';
+            });
+
+            if (mode === 'both') {
+                container.className = 'grid grid-cols-1 lg:grid-cols-2 gap-6';
+                maleBox.classList.remove('hidden');
+                femaleBox.classList.remove('hidden');
+            } else if (mode === 'Male') {
+                container.className = 'grid grid-cols-1 gap-6';
+                maleBox.classList.remove('hidden');
+                femaleBox.classList.add('hidden');
+            } else {
+                container.className = 'grid grid-cols-1 gap-6';
+                maleBox.classList.add('hidden');
+                femaleBox.classList.remove('hidden');
+            }
+        }
+
+        function toggleStickerSelection(id) {
+            const sticker = stickers.find(s => s.id === id);
+            if (!sticker) return;
+
+            const idx = selectedStickers.findIndex(s => s.id === id);
+            if (idx > -1) {
+                selectedStickers.splice(idx, 1);
+            } else {
+                selectedStickers.push(sticker);
+            }
+            renderSides();
+            renderSelectedSummary();
+        }
+
+        function renderSelectedSummary() {
+            const listEl = document.getElementById('selected-items-list');
+            const totalEl = document.getElementById('selected-total-display');
+
+            if (selectedStickers.length === 0) {
+                listEl.innerHTML = `<p class="text-gray-400 italic">No stickers tapped yet. Tap stickers on the Male or Female side above.</p>`;
+                totalEl.innerText = 'GH₵ 0.00';
+                return;
+            }
+
+            let sum = 0;
+            listEl.innerHTML = selectedStickers.map((s, idx) => {
+                sum += Number(s.price) || 0;
+                const thumb = isImageSrc(s.image)
+                    ? `<img src="${s.image}" class="w-7 h-7 object-contain rounded bg-white border">`
+                    : `<span class="text-base">${s.image}</span>`;
+                return `
+                    <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-indigo-100">
+                        <div class="flex items-center gap-2">
+                            ${thumb}
+                            <span class="font-bold">${s.gender} Sticker #${idx + 1}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-gray-900">GH₵ ${s.price}</span>
+                            <button type="button" onclick="toggleStickerSelection(${s.id})" class="text-red-500 font-bold text-xs">Remove</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            totalEl.innerText = `GH₵ ${sum.toFixed(2)}`;
+        }
+
+        // Upload Modal
+        function openUploadModal() {
+            document.getElementById('upload-modal').classList.remove('hidden');
+            if (isUnlocked) {
+                document.getElementById('admin-login-box').classList.add('hidden');
+                document.getElementById('admin-upload-box').classList.remove('hidden');
+                renderAdminList();
+            }
+        }
+
+        function closeUploadModal() {
+            document.getElementById('upload-modal').classList.add('hidden');
+        }
+
+        function verifyAdminLogin() {
+            const pass = document.getElementById('admin-pass-input').value.trim();
+            if (pass === 'admin123') {
+                isUnlocked = true;
+                document.getElementById('admin-pass-error').classList.add('hidden');
+                document.getElementById('admin-login-box').classList.add('hidden');
+                document.getElementById('admin-upload-box').classList.remove('hidden');
+                renderAdminList();
+            } else {
+                document.getElementById('admin-pass-error').classList.remove('hidden');
+            }
+        }
+
+        function handleStickerFiles(event) {
+            const files = Array.from(event.target.files || []);
+            if (!files.length) return;
+
+            const gender = document.getElementById('upload-gender').value;
+            const price = Number(document.getElementById('upload-price').value) || 15;
+            const statusEl = document.getElementById('upload-status');
+            statusEl.innerText = `Uploading ${files.length} picture(s)...`;
+
+            let doneCount = 0;
+            files.forEach((file, i) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    stickers.unshift({
+                        id: Date.now() + i + Math.floor(Math.random() * 1000),
+                        gender,
+                        price,
+                        image: e.target.result,
+                        bg: gender === 'Male' ? 'bg-blue-50' : 'bg-pink-50'
+                    });
+                    doneCount++;
+                    if (doneCount === files.length) {
+                        saveStickers();
+                        event.target.value = '';
+                        statusEl.innerText = `Added ${files.length} sticker(s) to ${gender} side!`;
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function saveStickers() {
+            localStorage.setItem('stickify_mf_stickers', JSON.stringify(stickers));
+            renderSides();
+            renderAdminList();
+        }
+
+        function deleteUploadedSticker(id) {
+            stickers = stickers.filter(s => s.id !== id);
+            selectedStickers = selectedStickers.filter(s => s.id !== id);
+            saveStickers();
+            renderSelectedSummary();
+        }
+
+        function renderAdminList() {
+            document.getElementById('uploaded-count').innerText = stickers.length;
+            document.getElementById('admin-sticker-list').innerHTML = stickers.map((s, i) => {
+                const thumb = isImageSrc(s.image)
+                    ? `<img src="${s.image}" class="w-9 h-9 object-contain rounded border bg-white">`
+                    : `<span class="text-xl">${s.image}</span>`;
+                return `
+                    <div class="flex items-center justify-between bg-gray-50 p-2 rounded-lg border border-gray-200 text-xs">
+                        <div class="flex items-center gap-2.5">
+                            ${thumb}
+                            <div>
+                                <div class="font-bold">${s.gender} #${i + 1}</div>
+                                <div class="text-gray-500">GH₵ ${s.price}</div>
+                            </div>
+                        </div>
+                        <button type="button" onclick="deleteUploadedSticker(${s.id})" class="text-red-600 font-bold px-2 py-1">Delete</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function downloadUpdatedHTML() {
+            let htmlContent = document.documentElement.outerHTML;
+            const replacement = `const defaultStickers = ${JSON.stringify(stickers)};`;
+            htmlContent = htmlContent.replace(/const defaultStickers = \[[\s\S]*?\];/, replacement);
+
+            const blob = new Blob(["<!DOCTYPE html>\n" + htmlContent], { type: "text/html" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "index.html";
+            a.click();
+        }
+
+        // Order Form
+        function togglePaymentFields() {
+            const method = document.querySelector('input[name="payment_method"]:checked').value;
+            document.getElementById('momo-fields').style.display = method === 'Mobile Money' ? 'block' : 'none';
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            if (selectedStickers.length === 0) {
+                alert("Please tap at least one sticker from the Male or Female side first.");
+                return;
+            }
+
+            const btn = document.getElementById('pay-btn');
+            const name = document.getElementById('cust-name').value;
+            const section = document.querySelector('input[name="section"]:checked').value;
+            const lamination = document.querySelector('input[name="lamination"]:checked').value;
+            const loc = document.getElementById('cust-campus-location').value;
+            const day = document.getElementById('cust-pickup-day').value;
+            const time = document.getElementById('cust-pickup-time').value;
+            const sum = selectedStickers.reduce((acc, s) => acc + (Number(s.price) || 0), 0);
+
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                document.getElementById('res-name').innerText = name;
+                document.getElementById('res-spec').innerText = `${section} • ${lamination}`;
+                document.getElementById('res-total').innerText = `${selectedStickers.length} sticker(s) — GH₵ ${sum.toFixed(2)}`;
+                document.getElementById('res-loc').innerText = loc;
+                document.getElementById('res-datetime').innerText = `${day} at ${time}`;
+                document.getElementById('res-ref').innerText = 'STK-' + Math.floor(100000 + Math.random() * 900000);
+                document.getElementById('success-modal').classList.remove('hidden');
+
+                btn.innerHTML = `<i class="fa-solid fa-lock"></i> <span>Pay & Confirm Campus Pickup</span>`;
+                btn.disabled = false;
+            }, 1000);
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            document.getElementById('order-form').reset();
+            selectedStickers = [];
+            renderSides();
+            renderSelectedSummary();
+        }
+
+        document.getElementById('cust-pickup-day').min = new Date().toISOString().split('T')[0];
+        renderSides();
+        renderSelectedSummary();
+    </script>
+</body>
+</html>
