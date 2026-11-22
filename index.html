@@ -125,7 +125,7 @@
             <!-- Selected Stickers Summary -->
             <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-3.5 mb-5">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-extrabold uppercase text-indigo-900">Selected Stickers</span>
+                    <span class="text-xs font-extrabold uppercase text-indigo-900">Selected Pictures & Stickers</span>
                     <span id="selected-count-display" class="text-xs font-extrabold text-indigo-700">0 selected</span>
                 </div>
                 <div id="selected-items-list" class="space-y-1.5 text-xs text-gray-700">
@@ -316,7 +316,7 @@
 
                 <!-- Stickers Upload Box -->
                 <div class="bg-indigo-50/70 border border-indigo-100 p-4 rounded-xl space-y-3">
-                    <h4 class="font-bold text-xs uppercase text-indigo-900">Upload Stickers (Male or Female)</h4>
+                    <h4 class="font-bold text-xs uppercase text-indigo-900">Add More Pictures (Male or Female)</h4>
                     <div>
                         <label class="block text-[11px] font-bold uppercase text-gray-600 mb-1">Put On Side</label>
                         <select id="upload-gender" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold">
@@ -328,16 +328,19 @@
                     <div>
                         <label for="sticker-file-input" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 cursor-pointer shadow">
                             <i class="fa-solid fa-upload"></i>
-                            <span>Upload Sticker Pictures</span>
+                            <span>Add Sticker Pictures</span>
                         </label>
                         <input type="file" id="sticker-file-input" accept="image/*" multiple onchange="handleStickerFiles(event)" class="sr-only">
-                        <p id="upload-status" class="text-[11px] text-gray-500 mt-1.5">You can pick one or multiple pictures at once.</p>
+                        <p id="upload-status" class="text-[11px] text-gray-500 mt-1.5">Select multiple pictures at once to add more to Male or Female.</p>
                     </div>
                 </div>
 
                 <!-- Uploaded Stickers List -->
                 <div>
-                    <h4 class="font-bold text-xs uppercase text-gray-500 mb-2">Uploaded Stickers (<span id="uploaded-count">0</span>)</h4>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-bold text-xs uppercase text-gray-500">All Stickers (<span id="uploaded-count">0</span>)</h4>
+                        <button type="button" onclick="resetDefaultStickers()" class="text-[11px] font-bold text-indigo-600 hover:underline">Reset Default Stickers</button>
+                    </div>
                     <div id="admin-sticker-list" class="space-y-2 max-h-52 overflow-y-auto pr-1"></div>
                 </div>
 
@@ -356,16 +359,18 @@
     <!-- ==================== ORDER BACKUP / CONFIRMATION MODAL ==================== -->
     <div id="success-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-        <div class="relative bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl z-10">
+        <div class="relative bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl z-10 max-h-[92vh] overflow-y-auto">
             <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-3">
                 <i class="fa-brands fa-whatsapp"></i>
             </div>
             <h3 class="text-xl font-extrabold mb-1">Opening WhatsApp...</h3>
             <p class="text-xs text-gray-600 mb-4">Your order for <span id="res-name" class="font-bold text-gray-900"></span> is prepared for <strong>+233 531780030</strong>:</p>
-            <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-xl text-left text-xs space-y-1.5 mb-4">
+            <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-xl text-left text-xs space-y-2 mb-4">
                 <div><span class="font-bold text-gray-700">Section & Lamination:</span> <span id="res-spec"></span></div>
-                <div><span class="font-bold text-gray-700">Stickers Chosen:</span> <span id="res-stickers" class="font-bold text-indigo-700"></span></div>
-                <div><span class="font-bold text-gray-700">Custom Picture:</span> <span id="res-custom-pic"></span></div>
+                <div>
+                    <div class="font-bold text-gray-700 mb-1">Selected Pictures in Order:</div>
+                    <div id="res-pictures-list" class="space-y-1.5"></div>
+                </div>
                 <div><span class="font-bold text-gray-700">Pickup Place:</span> <span id="res-loc"></span></div>
                 <div><span class="font-bold text-gray-700">Pickup Day & Time:</span> <span id="res-datetime"></span></div>
                 <div><span class="font-bold text-gray-700">Payment:</span> <span id="res-payment"></span></div>
@@ -396,18 +401,42 @@
         const WHATSAPP_NUMBER = "233531780030";
         const defaultFlyerData = "";
         const defaultStickers = [
-            { id: 1, gender: "Male", image: "💀⚡", bg: "bg-slate-100" },
-            { id: 2, gender: "Male", image: "💻🔥", bg: "bg-blue-100" },
-            { id: 3, gender: "Male", image: "🏎️💨", bg: "bg-red-100" },
-            { id: 4, gender: "Male", image: "⚽👑", bg: "bg-emerald-100" },
-            { id: 5, gender: "Female", image: "🌸✨", bg: "bg-pink-100" },
-            { id: 6, gender: "Female", image: "🦋💜", bg: "bg-purple-100" },
-            { id: 7, gender: "Female", image: "💖🌷", bg: "bg-rose-100" },
-            { id: 8, gender: "Female", image: "🧋👑", bg: "bg-amber-100" }
+            { id: 1, gender: "Male", label: "Male Sticker 1", image: "💀⚡", bg: "bg-slate-100" },
+            { id: 2, gender: "Male", label: "Male Sticker 2", image: "💻🔥", bg: "bg-blue-100" },
+            { id: 3, gender: "Male", label: "Male Sticker 3", image: "🏎️💨", bg: "bg-red-100" },
+            { id: 4, gender: "Male", label: "Male Sticker 4", image: "⚽👑", bg: "bg-emerald-100" },
+            { id: 5, gender: "Female", label: "Female Sticker 1", image: "🌸✨", bg: "bg-pink-100" },
+            { id: 6, gender: "Female", label: "Female Sticker 2", image: "🦋💜", bg: "bg-purple-100" },
+            { id: 7, gender: "Female", label: "Female Sticker 3", image: "💖🌷", bg: "bg-rose-100" },
+            { id: 8, gender: "Female", label: "Female Sticker 4", image: "🧋👑", bg: "bg-amber-100" }
         ];
 
-        let currentFlyer = localStorage.getItem('stickify_mf_flyer') || defaultFlyerData;
-        let stickers = JSON.parse(localStorage.getItem('stickify_mf_stickers')) || defaultStickers;
+        function loadSavedFlyer() {
+            try {
+                return localStorage.getItem('stickify_mf_flyer') || defaultFlyerData;
+            } catch (e) {
+                return defaultFlyerData;
+            }
+        }
+
+        function loadSavedStickers() {
+            try {
+                const raw = localStorage.getItem('stickify_mf_stickers');
+                if (!raw) return defaultStickers.slice();
+                const parsed = JSON.parse(raw);
+                if (!Array.isArray(parsed) || parsed.length === 0) return defaultStickers.slice();
+                return parsed.map((item, idx) => ({
+                    ...item,
+                    gender: item.gender === 'Female' ? 'Female' : 'Male',
+                    label: item.label || `${item.gender === 'Female' ? 'Female' : 'Male'} Sticker ${idx + 1}`
+                }));
+            } catch (e) {
+                return defaultStickers.slice();
+            }
+        }
+
+        let currentFlyer = loadSavedFlyer();
+        let stickers = loadSavedStickers();
         let selectedStickers = [];
         let customerCustomPhoto = null;
         let latestOrderMessage = "";
@@ -457,8 +486,9 @@
 
         function renderStickerCard(sticker, index) {
             const isPicked = selectedStickers.some(s => s.id === sticker.id);
+            const title = sticker.label || `${sticker.gender} Sticker ${index + 1}`;
             const visual = isImageSrc(sticker.image)
-                ? `<img src="${sticker.image}" alt="${sticker.gender} Sticker ${index + 1}" class="w-full h-full object-cover rounded-md">`
+                ? `<img src="${sticker.image}" alt="${title}" class="w-full h-full object-cover rounded-md">`
                 : `<div class="text-3xl select-none">${sticker.image}</div>`;
 
             const borderClass = isPicked
@@ -470,8 +500,9 @@
                     <div class="w-full aspect-[4/3] rounded-lg ${sticker.bg || 'bg-gray-100'} flex items-center justify-center overflow-hidden mb-2">
                         ${visual}
                     </div>
-                    <div class="w-full flex items-center justify-end">
-                        <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full ${isPicked ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700'}">
+                    <div class="w-full flex items-center justify-between gap-1">
+                        <span class="text-[11px] font-semibold text-gray-600 truncate">${title}</span>
+                        <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full shrink-0 ${isPicked ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700'}">
                             ${isPicked ? 'Selected' : 'Pick'}
                         </span>
                     </div>
@@ -488,11 +519,11 @@
 
             document.getElementById('male-grid').innerHTML = maleList.length
                 ? maleList.map((s, i) => renderStickerCard(s, i)).join('')
-                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Male stickers yet.</p>`;
+                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Male stickers yet. Tap "Upload / Edit" to add Male pictures.</p>`;
 
             document.getElementById('female-grid').innerHTML = femaleList.length
                 ? femaleList.map((s, i) => renderStickerCard(s, i)).join('')
-                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Female stickers yet.</p>`;
+                : `<p class="col-span-full text-center text-xs text-gray-400 py-8">No Female stickers yet. Tap "Upload / Edit" to add Female pictures.</p>`;
         }
 
         function setSideView(mode) {
@@ -548,17 +579,18 @@
                 return;
             }
 
-            let html = selectedStickers.map((s, idx) => {
+            let html = selectedStickers.map((s) => {
+                const title = s.label || `${s.gender} Sticker`;
                 const thumb = isImageSrc(s.image)
                     ? `<img src="${s.image}" class="w-10 aspect-[4/3] object-cover rounded bg-white border">`
                     : `<span class="text-base">${s.image}</span>`;
                 return `
                     <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-indigo-100">
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 min-w-0">
                             ${thumb}
-                            <span class="font-bold">${s.gender} Sticker #${idx + 1}</span>
+                            <span class="font-bold truncate">${title}</span>
                         </div>
-                        <button type="button" onclick="toggleStickerSelection(${s.id})" class="text-red-500 font-bold text-xs">Remove</button>
+                        <button type="button" onclick="toggleStickerSelection(${s.id})" class="text-red-500 font-bold text-xs shrink-0 ml-2">Remove</button>
                     </div>
                 `;
             }).join('');
@@ -566,11 +598,11 @@
             if (customerCustomPhoto) {
                 html += `
                     <div class="flex items-center justify-between bg-amber-50 px-2.5 py-1.5 rounded-lg border border-amber-200">
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 min-w-0">
                             <img src="${customerCustomPhoto.dataUrl}" class="w-10 aspect-[4/3] object-cover rounded bg-white border">
-                            <span class="font-bold">Custom Picture: ${customerCustomPhoto.name}</span>
+                            <span class="font-bold truncate">Custom Picture: ${customerCustomPhoto.name}</span>
                         </div>
-                        <button type="button" onclick="clearCustomerCustomPhoto()" class="text-red-500 font-bold text-xs">Remove</button>
+                        <button type="button" onclick="clearCustomerCustomPhoto()" class="text-red-500 font-bold text-xs shrink-0 ml-2">Remove</button>
                     </div>
                 `;
             }
@@ -578,24 +610,49 @@
             listEl.innerHTML = html;
         }
 
+        // Resize uploaded image so many more pictures fit comfortably
+        function resizeFileToDataUrl(file, maxWidth, quality, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width || maxWidth;
+                    let height = img.height || maxWidth;
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    callback(canvas.toDataURL('image/jpeg', quality));
+                };
+                img.onerror = function() {
+                    callback(e.target.result);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
         // Customer Custom Photo
         function handleCustomerCustomPhoto(event) {
             const file = event.target.files && event.target.files[0];
             if (!file) return;
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
+            resizeFileToDataUrl(file, 700, 0.82, function(dataUrl) {
                 customerCustomPhoto = {
                     name: file.name,
-                    dataUrl: e.target.result
+                    dataUrl
                 };
                 document.getElementById('customer-photo-preview').src = customerCustomPhoto.dataUrl;
                 document.getElementById('customer-photo-name').innerText = customerCustomPhoto.name;
                 document.getElementById('customer-photo-preview-box').classList.remove('hidden');
                 document.getElementById('clear-custom-photo-btn').classList.remove('hidden');
                 renderSelectedSummary();
-            };
-            reader.readAsDataURL(file);
+            });
         }
 
         function clearCustomerCustomPhoto() {
@@ -640,50 +697,65 @@
             const statusEl = document.getElementById('flyer-upload-status');
             statusEl.innerText = "Uploading flyer...";
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                currentFlyer = e.target.result;
-                localStorage.setItem('stickify_mf_flyer', currentFlyer);
+            resizeFileToDataUrl(file, 1000, 0.85, function(dataUrl) {
+                currentFlyer = dataUrl;
+                try {
+                    localStorage.setItem('stickify_mf_flyer', currentFlyer);
+                } catch (e) {}
                 renderFlyer();
                 event.target.value = '';
                 statusEl.innerText = "Flyer updated!";
-            };
-            reader.readAsDataURL(file);
+            });
         }
 
         function handleStickerFiles(event) {
             const files = Array.from(event.target.files || []);
             if (!files.length) return;
 
-            const gender = document.getElementById('upload-gender').value;
+            const gender = document.getElementById('upload-gender').value === 'Female' ? 'Female' : 'Male';
             const statusEl = document.getElementById('upload-status');
-            statusEl.innerText = `Uploading ${files.length} picture(s)...`;
+            statusEl.innerText = `Adding ${files.length} picture(s) to ${gender}...`;
 
             let doneCount = 0;
             files.forEach((file, i) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
+                const cleanName = file.name.replace(/\.[^/.]+$/, '').slice(0, 24) || `${gender} Picture`;
+                resizeFileToDataUrl(file, 650, 0.78, function(dataUrl) {
                     stickers.unshift({
-                        id: Date.now() + i + Math.floor(Math.random() * 1000),
+                        id: Date.now() + i + Math.floor(Math.random() * 10000),
                         gender,
-                        image: e.target.result,
+                        label: `${gender}: ${cleanName}`,
+                        image: dataUrl,
                         bg: gender === 'Male' ? 'bg-blue-50' : 'bg-pink-50'
                     });
                     doneCount++;
                     if (doneCount === files.length) {
                         saveStickers();
                         event.target.value = '';
-                        statusEl.innerText = `Added ${files.length} sticker(s) to ${gender} side!`;
+                        statusEl.innerText = `Added ${files.length} picture(s) to ${gender}!`;
                     }
-                };
-                reader.readAsDataURL(file);
+                });
             });
         }
 
         function saveStickers() {
-            localStorage.setItem('stickify_mf_stickers', JSON.stringify(stickers));
+            try {
+                localStorage.setItem('stickify_mf_stickers', JSON.stringify(stickers));
+            } catch (e) {
+                alert("Browser storage is full, so pictures are active on this page—tap 'Download Updated index.html' below to save them permanently.");
+            }
             renderSides();
             renderAdminList();
+        }
+
+        function resetDefaultStickers() {
+            stickers = defaultStickers.slice();
+            selectedStickers = [];
+            try {
+                localStorage.removeItem('stickify_mf_stickers');
+            } catch (e) {}
+            renderSides();
+            renderAdminList();
+            renderSelectedSummary();
         }
 
         function deleteUploadedSticker(id) {
@@ -696,16 +768,17 @@
         function renderAdminList() {
             document.getElementById('uploaded-count').innerText = stickers.length;
             document.getElementById('admin-sticker-list').innerHTML = stickers.map((s, i) => {
+                const title = s.label || `${s.gender} #${i + 1}`;
                 const thumb = isImageSrc(s.image)
                     ? `<img src="${s.image}" class="w-12 aspect-[4/3] object-cover rounded border bg-white">`
                     : `<span class="text-xl">${s.image}</span>`;
                 return `
                     <div class="flex items-center justify-between bg-gray-50 p-2 rounded-lg border border-gray-200 text-xs">
-                        <div class="flex items-center gap-2.5">
+                        <div class="flex items-center gap-2.5 min-w-0">
                             ${thumb}
-                            <div class="font-bold">${s.gender} #${i + 1}</div>
+                            <div class="font-bold truncate">${title}</div>
                         </div>
-                        <button type="button" onclick="deleteUploadedSticker(${s.id})" class="text-red-600 font-bold px-2 py-1">Delete</button>
+                        <button type="button" onclick="deleteUploadedSticker(${s.id})" class="text-red-600 font-bold px-2 py-1 shrink-0">Delete</button>
                     </div>
                 `;
             }).join('');
@@ -754,8 +827,35 @@
             const paymentText = payMethod === 'Mobile Money' ? `${payMethod} (${momoNet})` : payMethod;
             const ref = 'STK-' + Math.floor(100000 + Math.random() * 900000);
 
-            const pickedLabels = selectedStickers.map(s => `${s.gender} sticker`).join(', ') || 'None picked';
-            const customPicText = customerCustomPhoto ? `Yes (${customerCustomPhoto.name})` : 'None added';
+            // Render visual list of selected pictures in confirmation modal
+            const picCards = [];
+            const waPictureLines = [];
+
+            selectedStickers.forEach((s, idx) => {
+                const label = s.label || `${s.gender} Sticker ${idx + 1}`;
+                waPictureLines.push(`- ${label}`);
+                const thumbHtml = isImageSrc(s.image)
+                    ? `<img src="${s.image}" alt="${label}" class="w-11 aspect-[4/3] object-cover rounded border bg-white">`
+                    : `<span class="w-11 aspect-[4/3] flex items-center justify-center rounded border bg-white text-lg">${s.image}</span>`;
+                picCards.push(`
+                    <div class="flex items-center gap-2 bg-white p-1.5 rounded-lg border border-indigo-100">
+                        ${thumbHtml}
+                        <span class="font-bold text-gray-800">${label}</span>
+                    </div>
+                `);
+            });
+
+            if (customerCustomPhoto) {
+                waPictureLines.push(`- Custom Picture: ${customerCustomPhoto.name} (attached in chat)`);
+                picCards.push(`
+                    <div class="flex items-center gap-2 bg-amber-50 p-1.5 rounded-lg border border-amber-200">
+                        <img src="${customerCustomPhoto.dataUrl}" alt="${customerCustomPhoto.name}" class="w-11 aspect-[4/3] object-cover rounded border bg-white">
+                        <span class="font-bold text-gray-900">Custom: ${customerCustomPhoto.name}</span>
+                    </div>
+                `);
+            }
+
+            document.getElementById('res-pictures-list').innerHTML = picCards.join('');
 
             latestOrderMessage = [
                 `*New Sticker Order (${ref})*`,
@@ -763,20 +863,18 @@
                 `Phone: ${phone}`,
                 `Section: ${section}`,
                 `Lamination: ${lamination}`,
-                `Stickers Picked: ${pickedLabels} (${selectedStickers.length})`,
-                `Custom Picture: ${customPicText}`,
+                `Selected Pictures (${picCards.length}):`,
+                ...waPictureLines,
                 `Pickup Place: ${loc}`,
                 `Pickup Day & Time: ${day} at ${time}`,
                 `Payment: ${paymentText}`,
-                customerCustomPhoto ? `(Note: I will attach my custom picture "${customerCustomPhoto.name}" in this chat)` : ''
+                customerCustomPhoto ? `(Note: I will attach "${customerCustomPhoto.name}" in this chat)` : ''
             ].filter(Boolean).join('\n');
 
             const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(latestOrderMessage)}`;
 
             document.getElementById('res-name').innerText = name;
             document.getElementById('res-spec').innerText = `${section} • ${lamination}`;
-            document.getElementById('res-stickers').innerText = selectedStickers.length ? `${selectedStickers.length} sticker(s)` : 'None picked';
-            document.getElementById('res-custom-pic').innerText = customerCustomPhoto ? customerCustomPhoto.name : 'None added';
             document.getElementById('res-loc').innerText = loc;
             document.getElementById('res-datetime').innerText = `${day} at ${time}`;
             document.getElementById('res-payment').innerText = paymentText;
